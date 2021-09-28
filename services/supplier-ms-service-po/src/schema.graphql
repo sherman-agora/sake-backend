@@ -1,0 +1,41 @@
+# import Query.purchaseOrder, Query.purchaseOrders, Query.purchaseOrdersConnection, Mutation.createPurchaseOrder, Mutation.updatePurchaseOrder, Mutation.deletePurchaseOrder from 'prisma.graphql'
+# import Query.purchaseOrderItem, Query.purchaseOrderItems, Query.purchaseOrderItemsConnection, Mutation.createPurchaseOrderItem, Mutation.updatePurchaseOrderItem, Mutation.deletePurchaseOrderItem from 'prisma.graphql'
+
+type PurchaseOrder @key(fields: "id") {
+  id: ID!
+  code: String!
+  supplier: Supplier!
+  userId: ID
+  expectedDeliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  state: PurchaseOrderStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  products(where: PurchaseOrderItemWhereInput, orderBy: PurchaseOrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PurchaseOrderItem!]
+}
+
+type PurchaseOrderItem @key(fields: "id") {
+  id: ID!
+  purchaseOrder: PurchaseOrder!
+  product: Product!
+  remarks: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  expiryDate: DateTime
+  tax: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+extend type Supplier @key(fields: "id") {
+  id: ID! @external
+  purchaseOrders: [PurchaseOrder]
+}
+
+extend type Product @key(fields: "id") {
+  id: ID! @external
+  purchaseOrderItems: [PurchaseOrderItem]
+}

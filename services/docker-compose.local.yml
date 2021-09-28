@@ -1,0 +1,265 @@
+version: '3'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - '2181:2181'
+  kafka:
+    image: wurstmeister/kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - '9092:9092'
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,RMOFF_DOCKER_HACK://host.docker.internal:19092
+      KAFKA_LISTENERS: PLAINTEXT://:9092,RMOFF_DOCKER_HACK://:19092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,RMOFF_DOCKER_HACK:PLAINTEXT
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  prisma:
+    image: prismagraphql/prisma:1.34
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - '4466:4466'
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        CLUSTER_PUBLIC_KEY: erp.com
+        databases:
+          default:
+            connector: mongo
+            uri: mongodb://prisma:prisma@mongo
+  mongo:
+    image: mongo:3.6
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: prisma
+      MONGO_INITDB_ROOT_PASSWORD: prisma
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo:/var/lib/mongo
+
+  sms-gateway:
+    build: ./supplier-ms-gateway
+    image: sms-gateway:${SERVICE_VERSION}
+    environment:
+      SUPPLIER_HOST: sms-supplier:3002
+      PRODUCT_HOST: sms-product:3003
+      PURCHASE_ORDER_HOST: sms-po:3004
+      INVENTORY_HOST: sms-inventory:3005
+      CUSTOMER_HOST: sms-customer:3006
+      SALES_ORDER_HOST: sms-sales-order:3007
+      INVOICE_HOST: sms-invoice:3008
+      DELIVERY_HOST: sms-delivery:3009
+      SHIPPING_HOST: sms-shipping:3010
+      FORECAST_HOST: sms-forecast:3011
+      XERO_HOST: sms-xero:3012
+      RECEIVE_HOST: sms-receive:3013
+      USER_HOST: sms-user:3014
+      WAIT_HOSTS: sms-forecast:3011
+      WAIT_HOSTS_TIMEOUT: 300
+    ports:
+      - '4000:4000'
+  sms-supplier:
+    build: ./supplier-ms-service-supplier
+    image: sms-supplier:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: prisma:4466, kafka:9092
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3002
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3002:3002'
+  sms-product:
+    build: ./supplier-ms-service-product
+    image: sms-product:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: prisma:4466, kafka:9092
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3003
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3003:3003'
+  sms-po:
+    build: ./supplier-ms-service-po
+    image: sms-po:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: sms-supplier:3002, sms-product:3003, prisma:4466
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3004
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3004:3004'
+  sms-inventory:
+    build: ./supplier-ms-service-inventory
+    image: sms-inventory:${SERVICE_VERSION}
+    environment:
+      #   WAIT_HOSTS: sms-product:3003, sms-po:3004, sms-delivery:3009
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3005
+      KAFKA_BROKER0: kafka:9092
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3005:3005'
+  sms-customer:
+    container_name: sake-customer
+    build: ./supplier-ms-service-customer
+    image: sake-service/sms-customer:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: prisma:4466, kafka:9092
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3006
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3006:3006'
+  sms-sales-order:
+    build: ./supplier-ms-service-sales-order
+    image: sms-sales-order:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: sms-customer:3006
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3007
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3007:3007'
+  sms-invoice:
+    build: ./supplier-ms-service-invoice
+    image: sms-invoice:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: sms-customer:3006
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3008
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3008:3008'
+  sms-delivery:
+    build: ./supplier-ms-service-delivery
+    image: sms-delivery:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: sms-product:3003
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3009
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3009:3009'
+  sms-shipping:
+    build: ./supplier-ms-service-shipping
+    image: sms-shipping:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: sms-po:3004
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3010
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3010:3010'
+  sms-forecast:
+    build: ./supplier-ms-service-forecast
+    image: sms-forecast:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: sms-inventory:3005
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3011
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3011:3011'
+  sms-xero:
+    build: ./supplier-ms-service-xero
+    image: sms-xero:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: sms-customer:3006, sms-po:3004, sms-sales-order:3007
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3012
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+      # REDIRECTURI: 'https://petgo-management-system.appspot.com/Callback'
+    ports:
+      - '3012:3012'
+  sms-receive:
+    build: ./supplier-ms-service-receive
+    image: sms-receive:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS: sms-delivery:3009, sms-invoice:3008
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3013
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3013:3013'
+  sms-user:
+    build: ./supplier-ms-service-user
+    image: sms-user:${SERVICE_VERSION}
+    environment:
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3014
+
+      PRISMA_STAGE: 'dev'
+      PRISMA_HOST: 'prisma'
+      PRISMA_PORT: 4466
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3014:3014'
+  web-integration:
+    build: ./web-integration
+    image: web-integration:${SERVICE_VERSION}
+    environment:
+      VERSOIN: '1.1.7'
+      WAIT_HOSTS: sms-customer:3006
+      WAIT_HOSTS_TIMEOUT: 120
+      PORT: 3000
+
+      API_GATEWAY: http://sms-gateway:4000
+      KAFKA_HOST: 'kafka:9092'
+    ports:
+      - '3000:3000'
+volumes:
+  mongo: ~

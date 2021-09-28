@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.production.yml
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-integration
+  name: web-integration
+  namespace: erp
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web-integration
+    spec:
+      containers:
+        - env:
+            - name: KAFKA_BROKER0
+              value: kafka-0.kafka-headless.petgo.svc.cluster.local:9092
+            - name: KAFKA_BROKER1
+              value: kafka-1.kafka-headless.petgo.svc.cluster.local:9092
+            - name: KAFKA_BROKER2
+              value: kafka-2.kafka-headless.petgo.svc.cluster.local:9092
+            - name: API_GATEWAY
+              value: http://sms-gateway:4000
+            - name: PORT
+              value: '3000'
+            - name: KAFKA_HOST
+              value: kafka.petgo.svc.cluster.local:9092, sms-inventory:3005, sms-product:3003
+          image: gcr.io/petgo-management-system/web-integration:1.8.73
+          name: web-integration
+          ports:
+            - containerPort: 3000
+          resources: {}
+      restartPolicy: Always
+status: {}

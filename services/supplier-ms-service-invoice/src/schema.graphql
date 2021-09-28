@@ -1,0 +1,26 @@
+# import Query.invoice, Query.invoices, Query.invoicesConnection, Mutation.createInvoice, Mutation.updateInvoice, Mutation.deleteInvoice from 'prisma.graphql'
+
+type Invoice @key(fields: "id") {
+  id: ID!
+  code: String!
+  salesOrder: SalesOrder!
+  userId: ID
+  state: InvoiceStatus!
+  paymentStatus: InvoicePaymentStatus!
+  totalPrice: Float!
+  title: String
+  remark: String
+  shipmentDate: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  paidAt: DateTime
+}
+
+extend type SalesOrder @key(fields: "id") {
+  id: ID! @external
+  invoice: Invoice
+}
+
+type Mutation {
+  updateInvoiceByXero(data: InvoiceUpdateInput!, where: InvoiceWhereUniqueInput!): Invoice
+}

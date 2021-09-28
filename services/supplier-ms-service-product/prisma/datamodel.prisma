@@ -1,0 +1,48 @@
+type Product {
+  id: ID! @id
+  code: String! @unique
+  brandEn: String!
+  brandChi: String!
+  nameEn: String!
+  nameChi: String!
+  discount: String
+  package: Int!
+  weight: String!
+  shortDescription: String
+  longDescription: String
+  images: [ProductImage!]!
+  sku: String
+  upc: String!
+  cost: Float!
+  printInLabel: Boolean @default(value: true)
+  printInInvoice: Boolean @default(value: true)
+  printInDN: Boolean @default(value: true)
+  wholeSalePrice1: Float!
+  wholeSalePrice2: Float!
+  wholeSalePrice3: Float!
+  wholeSalePrice4: Float!
+  wholeSalePrice5: Float!
+  retailPrice1: Float!
+  retailPrice2: Float!
+  retailPrice3: Float!
+  retailPrice4: Float!
+  retailPrice5: Float!
+  minOrderQuantity: Float! @default(value: 10)
+  minStockLevel: Float! @default(value: 0)
+  onlineDate: DateTime
+  offlineDate: DateTime
+  categories: [ProductCategory!]! @relation(name: "ProductCategory", link: INLINE)
+}
+
+type ProductCategory {
+  id: ID! @id
+  nameEn: String! @unique
+  nameChi: String! @unique
+  detail: String
+  products: [Product!]! @relation(name: "ProductCategory")
+}
+
+type ProductImage @embedded{
+  src: String!
+  title: String!
+}

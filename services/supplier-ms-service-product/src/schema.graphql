@@ -1,0 +1,54 @@
+# import Query.product, Query.products, Query.productsConnection, Mutation.createProduct, Mutation.updateProduct, Mutation.deleteProduct from 'prisma.graphql'
+# import Query.productCategory, Query.productCategories, Query.productCategoriesConnection, Mutation.createProductCategory, Mutation.updateProductCategory, Mutation.deleteProductCategory from 'prisma.graphql'
+
+type Product @key(fields: "id") {
+  id: ID!
+  code: String!
+  brandEn: String!
+  brandChi: String!
+  nameEn: String!
+  nameChi: String!
+  package: Int!
+  weight: String!
+  discount: String
+  shortDescription: String
+  longDescription: String
+  images(
+    where: ProductImageWhereInput
+    orderBy: ProductImageOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [ProductImage!]
+  sku: String
+  upc: String!
+  cost: Float!
+  printInLabel: Boolean
+  printInInvoice: Boolean
+  printInDN: Boolean
+  wholeSalePrice1: Float!
+  wholeSalePrice2: Float!
+  wholeSalePrice3: Float!
+  wholeSalePrice4: Float!
+  wholeSalePrice5: Float!
+  retailPrice1: Float!
+  retailPrice2: Float!
+  retailPrice3: Float!
+  retailPrice4: Float!
+  retailPrice5: Float!
+  minOrderQuantity: Float!
+  minStockLevel: Float!
+  onlineDate: DateTime
+  offlineDate: DateTime
+  categories(
+    where: ProductCategoryWhereInput
+    orderBy: ProductCategoryOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [ProductCategory!]
+}

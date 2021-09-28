@@ -1,0 +1,14 @@
+type Supplier {
+  id: ID! @id
+  name: String! @unique
+  contactPerson: String
+  address: String
+  email: String
+  country: String
+  phone: String
+  fax: String
+  paymentTerms: String
+  creditLine: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}

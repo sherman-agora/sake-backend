@@ -1,0 +1,64 @@
+type Customer {
+  id: ID! @id
+  code: String! @unique
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  shops: [CustomerShop!] @relation(link: INLINE)
+  group: CustomerGroup! @relation(link: INLINE)
+  coupons: [CustomerCoupon!]
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type CustomerGroup {
+  id: ID! @id
+  name: String! @unique
+  customers: [Customer!]!
+}
+
+type CustomerShop {
+  id: ID! @id
+  code: String! @unique
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: [Int]
+  customer: Customer
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type CustomerCoupon {
+  id: ID! @id
+  type: CustomerCouponType!
+  quantity: Int! @default(value: 0)
+  code: String! @unique
+  state: CustomerCouponState!
+  name: String! 
+  discount: String!
+  customer: Customer! @relation(link: INLINE)
+}
+
+enum CustomerCouponState {
+  PENDING,
+  AVAILABLE,
+  EMPTY,
+  DELETED
+}
+
+enum CustomerCouponType {
+  UNLIMITED,
+  LIMITED
+}

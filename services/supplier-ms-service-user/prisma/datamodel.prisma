@@ -1,0 +1,23 @@
+type User {
+  id: ID! @id
+  name: String! @unique
+  password: String!
+  group: UserGroup! @relation(link: INLINE)
+  permission: Permission!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum Permission {
+  ADMIN
+  ACCOUNT
+  SALES
+  INVENTORY
+  SUPERADMIN
+}
+
+type UserGroup {
+  id: ID! @id
+  name: String!
+  users: [User!]
+}

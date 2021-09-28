@@ -1,0 +1,12 @@
+type Warehouse {
+  id: ID! @id
+  code: String! @unique
+  description: String
+  address: String
+  status: WarehouseStatus! @default(value: ACTIVE)
+}
+
+enum WarehouseStatus {
+  ACTIVE
+  INACTIVE
+}

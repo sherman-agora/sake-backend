@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.production.yml
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sms-gateway
+  name: sms-gateway
+  namespace: erp
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sms-gateway
+    spec:
+      containers:
+        - env:
+            - name: KAFKA_BROKER0
+              value: kafka-0.kafka-headless.petgo.svc.cluster.local:9092
+            - name: KAFKA_BROKER1
+              value: kafka-1.kafka-headless.petgo.svc.cluster.local:9092
+            - name: KAFKA_BROKER2
+              value: kafka-2.kafka-headless.petgo.svc.cluster.local:9092
+            - name: CUSTOMER_HOST
+              value: sms-customer:3006
+            - name: DELIVERY_HOST
+              value: sms-delivery:3009
+            - name: FORECAST_HOST
+              value: sms-forecast:3011
+            - name: INVENTORY_HOST
+              value: sms-inventory:3005
+            - name: INVOICE_HOST
+              value: sms-invoice:3008
+            - name: PRODUCT_HOST
+              value: sms-product:3003
+            - name: PURCHASE_ORDER_HOST
+              value: sms-po:3004
+            - name: SALES_ORDER_HOST
+              value: sms-sales-order:3007
+            - name: SHIPPING_HOST
+              value: sms-shipping:3010
+            - name: SUPPLIER_HOST
+              value: sms-supplier:3002
+            - name: WAREHOUSE_HOST
+              value: sms-warehouse:3001
+            - name: XERO_HOST
+              value: sms-xero:3012
+            - name: RECEIVE_HOST
+              value: sms-receive:3013
+            - name: USER_HOST
+              value: sms-user:3014
+          image: gcr.io/petgo-management-system/sms-gateway:1.8.72
+          name: sms-gateway
+          ports:
+            - containerPort: 4000
+          resources: {}
+      restartPolicy: Always
+status: {}

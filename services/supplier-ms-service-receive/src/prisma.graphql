@@ -1,0 +1,259 @@
+type AggregateReceivePayment {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar DateTime
+
+scalar Long
+
+type Mutation {
+  createReceivePayment(data: ReceivePaymentCreateInput!): ReceivePayment!
+  updateReceivePayment(data: ReceivePaymentUpdateInput!, where: ReceivePaymentWhereUniqueInput!): ReceivePayment
+  updateManyReceivePayments(data: ReceivePaymentUpdateManyMutationInput!, where: ReceivePaymentWhereInput): BatchPayload!
+  upsertReceivePayment(where: ReceivePaymentWhereUniqueInput!, create: ReceivePaymentCreateInput!, update: ReceivePaymentUpdateInput!): ReceivePayment!
+  deleteReceivePayment(where: ReceivePaymentWhereUniqueInput!): ReceivePayment
+  deleteManyReceivePayments(where: ReceivePaymentWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+enum PaymentType {
+  COD
+  CREDIT
+  DEBIT
+}
+
+type Query {
+  receivePayment(where: ReceivePaymentWhereUniqueInput!): ReceivePayment
+  receivePayments(where: ReceivePaymentWhereInput, orderBy: ReceivePaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReceivePayment]!
+  receivePaymentsConnection(where: ReceivePaymentWhereInput, orderBy: ReceivePaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReceivePaymentConnection!
+  node(id: ID!): Node
+}
+
+type ReceivePayment {
+  id: ID!
+  invoiceId: ID!
+  deliveryNoteId: ID
+  userId: ID
+  paymentMethod: PaymentType!
+  paidAt: DateTime!
+  state: ReceivePaymentState
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ReceivePaymentConnection {
+  pageInfo: PageInfo!
+  edges: [ReceivePaymentEdge]!
+  aggregate: AggregateReceivePayment!
+}
+
+input ReceivePaymentCreateInput {
+  id: ID
+  invoiceId: ID!
+  deliveryNoteId: ID
+  userId: ID
+  paymentMethod: PaymentType!
+  paidAt: DateTime!
+  state: ReceivePaymentState
+}
+
+type ReceivePaymentEdge {
+  node: ReceivePayment!
+  cursor: String!
+}
+
+enum ReceivePaymentOrderByInput {
+  id_ASC
+  id_DESC
+  invoiceId_ASC
+  invoiceId_DESC
+  deliveryNoteId_ASC
+  deliveryNoteId_DESC
+  userId_ASC
+  userId_DESC
+  paymentMethod_ASC
+  paymentMethod_DESC
+  paidAt_ASC
+  paidAt_DESC
+  state_ASC
+  state_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ReceivePaymentPreviousValues {
+  id: ID!
+  invoiceId: ID!
+  deliveryNoteId: ID
+  userId: ID
+  paymentMethod: PaymentType!
+  paidAt: DateTime!
+  state: ReceivePaymentState
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum ReceivePaymentState {
+  CREATED
+  DELETED
+}
+
+type ReceivePaymentSubscriptionPayload {
+  mutation: MutationType!
+  node: ReceivePayment
+  updatedFields: [String!]
+  previousValues: ReceivePaymentPreviousValues
+}
+
+input ReceivePaymentSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ReceivePaymentWhereInput
+  AND: [ReceivePaymentSubscriptionWhereInput!]
+  OR: [ReceivePaymentSubscriptionWhereInput!]
+  NOT: [ReceivePaymentSubscriptionWhereInput!]
+}
+
+input ReceivePaymentUpdateInput {
+  invoiceId: ID
+  deliveryNoteId: ID
+  userId: ID
+  paymentMethod: PaymentType
+  paidAt: DateTime
+  state: ReceivePaymentState
+}
+
+input ReceivePaymentUpdateManyMutationInput {
+  invoiceId: ID
+  deliveryNoteId: ID
+  userId: ID
+  paymentMethod: PaymentType
+  paidAt: DateTime
+  state: ReceivePaymentState
+}
+
+input ReceivePaymentWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  invoiceId: ID
+  invoiceId_not: ID
+  invoiceId_in: [ID!]
+  invoiceId_not_in: [ID!]
+  invoiceId_lt: ID
+  invoiceId_lte: ID
+  invoiceId_gt: ID
+  invoiceId_gte: ID
+  invoiceId_contains: ID
+  invoiceId_not_contains: ID
+  invoiceId_starts_with: ID
+  invoiceId_not_starts_with: ID
+  invoiceId_ends_with: ID
+  invoiceId_not_ends_with: ID
+  deliveryNoteId: ID
+  deliveryNoteId_not: ID
+  deliveryNoteId_in: [ID!]
+  deliveryNoteId_not_in: [ID!]
+  deliveryNoteId_lt: ID
+  deliveryNoteId_lte: ID
+  deliveryNoteId_gt: ID
+  deliveryNoteId_gte: ID
+  deliveryNoteId_contains: ID
+  deliveryNoteId_not_contains: ID
+  deliveryNoteId_starts_with: ID
+  deliveryNoteId_not_starts_with: ID
+  deliveryNoteId_ends_with: ID
+  deliveryNoteId_not_ends_with: ID
+  userId: ID
+  userId_not: ID
+  userId_in: [ID!]
+  userId_not_in: [ID!]
+  userId_lt: ID
+  userId_lte: ID
+  userId_gt: ID
+  userId_gte: ID
+  userId_contains: ID
+  userId_not_contains: ID
+  userId_starts_with: ID
+  userId_not_starts_with: ID
+  userId_ends_with: ID
+  userId_not_ends_with: ID
+  paymentMethod: PaymentType
+  paymentMethod_not: PaymentType
+  paymentMethod_in: [PaymentType!]
+  paymentMethod_not_in: [PaymentType!]
+  paidAt: DateTime
+  paidAt_not: DateTime
+  paidAt_in: [DateTime!]
+  paidAt_not_in: [DateTime!]
+  paidAt_lt: DateTime
+  paidAt_lte: DateTime
+  paidAt_gt: DateTime
+  paidAt_gte: DateTime
+  state: ReceivePaymentState
+  state_not: ReceivePaymentState
+  state_in: [ReceivePaymentState!]
+  state_not_in: [ReceivePaymentState!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [ReceivePaymentWhereInput!]
+  OR: [ReceivePaymentWhereInput!]
+  NOT: [ReceivePaymentWhereInput!]
+}
+
+input ReceivePaymentWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  receivePayment(where: ReceivePaymentSubscriptionWhereInput): ReceivePaymentSubscriptionPayload
+}

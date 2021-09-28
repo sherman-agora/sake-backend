@@ -1,0 +1,1169 @@
+type AggregateExpiryDateSummary {
+  count: Int!
+}
+
+type AggregateInventoryItem {
+  count: Int!
+}
+
+type AggregateProductSummary {
+  count: Int!
+}
+
+type AggregateWarehouse {
+  count: Int!
+}
+
+type AggregateWarehouseSummary {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar DateTime
+
+type ExpiryDateSummary {
+  id: ID!
+  productId: ID!
+  expiryDate: DateTime!
+  quantity: Int!
+}
+
+type ExpiryDateSummaryConnection {
+  pageInfo: PageInfo!
+  edges: [ExpiryDateSummaryEdge]!
+  aggregate: AggregateExpiryDateSummary!
+}
+
+input ExpiryDateSummaryCreateInput {
+  id: ID
+  productId: ID!
+  expiryDate: DateTime!
+  quantity: Int!
+}
+
+type ExpiryDateSummaryEdge {
+  node: ExpiryDateSummary!
+  cursor: String!
+}
+
+enum ExpiryDateSummaryOrderByInput {
+  id_ASC
+  id_DESC
+  productId_ASC
+  productId_DESC
+  expiryDate_ASC
+  expiryDate_DESC
+  quantity_ASC
+  quantity_DESC
+}
+
+type ExpiryDateSummaryPreviousValues {
+  id: ID!
+  productId: ID!
+  expiryDate: DateTime!
+  quantity: Int!
+}
+
+type ExpiryDateSummarySubscriptionPayload {
+  mutation: MutationType!
+  node: ExpiryDateSummary
+  updatedFields: [String!]
+  previousValues: ExpiryDateSummaryPreviousValues
+}
+
+input ExpiryDateSummarySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ExpiryDateSummaryWhereInput
+  AND: [ExpiryDateSummarySubscriptionWhereInput!]
+  OR: [ExpiryDateSummarySubscriptionWhereInput!]
+  NOT: [ExpiryDateSummarySubscriptionWhereInput!]
+}
+
+input ExpiryDateSummaryUpdateInput {
+  productId: ID
+  expiryDate: DateTime
+  quantity: Int
+}
+
+input ExpiryDateSummaryUpdateManyMutationInput {
+  productId: ID
+  expiryDate: DateTime
+  quantity: Int
+}
+
+input ExpiryDateSummaryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  productId: ID
+  productId_not: ID
+  productId_in: [ID!]
+  productId_not_in: [ID!]
+  productId_lt: ID
+  productId_lte: ID
+  productId_gt: ID
+  productId_gte: ID
+  productId_contains: ID
+  productId_not_contains: ID
+  productId_starts_with: ID
+  productId_not_starts_with: ID
+  productId_ends_with: ID
+  productId_not_ends_with: ID
+  expiryDate: DateTime
+  expiryDate_not: DateTime
+  expiryDate_in: [DateTime!]
+  expiryDate_not_in: [DateTime!]
+  expiryDate_lt: DateTime
+  expiryDate_lte: DateTime
+  expiryDate_gt: DateTime
+  expiryDate_gte: DateTime
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  AND: [ExpiryDateSummaryWhereInput!]
+  OR: [ExpiryDateSummaryWhereInput!]
+  NOT: [ExpiryDateSummaryWhereInput!]
+}
+
+input ExpiryDateSummaryWhereUniqueInput {
+  id: ID
+}
+
+type InventoryItem {
+  id: ID!
+  warehouse: Warehouse!
+  productId: ID!
+  purchaseOrderId: String!
+  deliveryNoteId: String
+  label: String
+  expiryDate: DateTime!
+  cost: Float
+}
+
+type InventoryItemConnection {
+  pageInfo: PageInfo!
+  edges: [InventoryItemEdge]!
+  aggregate: AggregateInventoryItem!
+}
+
+input InventoryItemCreateInput {
+  id: ID
+  warehouse: WarehouseCreateOneWithoutProductsInput!
+  productId: ID!
+  purchaseOrderId: String!
+  deliveryNoteId: String
+  label: String
+  expiryDate: DateTime!
+  cost: Float
+}
+
+input InventoryItemCreateManyWithoutWarehouseInput {
+  create: [InventoryItemCreateWithoutWarehouseInput!]
+  connect: [InventoryItemWhereUniqueInput!]
+}
+
+input InventoryItemCreateWithoutWarehouseInput {
+  id: ID
+  productId: ID!
+  purchaseOrderId: String!
+  deliveryNoteId: String
+  label: String
+  expiryDate: DateTime!
+  cost: Float
+}
+
+type InventoryItemEdge {
+  node: InventoryItem!
+  cursor: String!
+}
+
+enum InventoryItemOrderByInput {
+  id_ASC
+  id_DESC
+  productId_ASC
+  productId_DESC
+  purchaseOrderId_ASC
+  purchaseOrderId_DESC
+  deliveryNoteId_ASC
+  deliveryNoteId_DESC
+  label_ASC
+  label_DESC
+  expiryDate_ASC
+  expiryDate_DESC
+  cost_ASC
+  cost_DESC
+}
+
+type InventoryItemPreviousValues {
+  id: ID!
+  productId: ID!
+  purchaseOrderId: String!
+  deliveryNoteId: String
+  label: String
+  expiryDate: DateTime!
+  cost: Float
+}
+
+input InventoryItemScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  productId: ID
+  productId_not: ID
+  productId_in: [ID!]
+  productId_not_in: [ID!]
+  productId_lt: ID
+  productId_lte: ID
+  productId_gt: ID
+  productId_gte: ID
+  productId_contains: ID
+  productId_not_contains: ID
+  productId_starts_with: ID
+  productId_not_starts_with: ID
+  productId_ends_with: ID
+  productId_not_ends_with: ID
+  purchaseOrderId: String
+  purchaseOrderId_not: String
+  purchaseOrderId_in: [String!]
+  purchaseOrderId_not_in: [String!]
+  purchaseOrderId_lt: String
+  purchaseOrderId_lte: String
+  purchaseOrderId_gt: String
+  purchaseOrderId_gte: String
+  purchaseOrderId_contains: String
+  purchaseOrderId_not_contains: String
+  purchaseOrderId_starts_with: String
+  purchaseOrderId_not_starts_with: String
+  purchaseOrderId_ends_with: String
+  purchaseOrderId_not_ends_with: String
+  deliveryNoteId: String
+  deliveryNoteId_not: String
+  deliveryNoteId_in: [String!]
+  deliveryNoteId_not_in: [String!]
+  deliveryNoteId_lt: String
+  deliveryNoteId_lte: String
+  deliveryNoteId_gt: String
+  deliveryNoteId_gte: String
+  deliveryNoteId_contains: String
+  deliveryNoteId_not_contains: String
+  deliveryNoteId_starts_with: String
+  deliveryNoteId_not_starts_with: String
+  deliveryNoteId_ends_with: String
+  deliveryNoteId_not_ends_with: String
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_lt: String
+  label_lte: String
+  label_gt: String
+  label_gte: String
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
+  expiryDate: DateTime
+  expiryDate_not: DateTime
+  expiryDate_in: [DateTime!]
+  expiryDate_not_in: [DateTime!]
+  expiryDate_lt: DateTime
+  expiryDate_lte: DateTime
+  expiryDate_gt: DateTime
+  expiryDate_gte: DateTime
+  cost: Float
+  cost_not: Float
+  cost_in: [Float!]
+  cost_not_in: [Float!]
+  cost_lt: Float
+  cost_lte: Float
+  cost_gt: Float
+  cost_gte: Float
+  AND: [InventoryItemScalarWhereInput!]
+  OR: [InventoryItemScalarWhereInput!]
+  NOT: [InventoryItemScalarWhereInput!]
+}
+
+type InventoryItemSubscriptionPayload {
+  mutation: MutationType!
+  node: InventoryItem
+  updatedFields: [String!]
+  previousValues: InventoryItemPreviousValues
+}
+
+input InventoryItemSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: InventoryItemWhereInput
+  AND: [InventoryItemSubscriptionWhereInput!]
+  OR: [InventoryItemSubscriptionWhereInput!]
+  NOT: [InventoryItemSubscriptionWhereInput!]
+}
+
+input InventoryItemUpdateInput {
+  warehouse: WarehouseUpdateOneRequiredWithoutProductsInput
+  productId: ID
+  purchaseOrderId: String
+  deliveryNoteId: String
+  label: String
+  expiryDate: DateTime
+  cost: Float
+}
+
+input InventoryItemUpdateManyDataInput {
+  productId: ID
+  purchaseOrderId: String
+  deliveryNoteId: String
+  label: String
+  expiryDate: DateTime
+  cost: Float
+}
+
+input InventoryItemUpdateManyMutationInput {
+  productId: ID
+  purchaseOrderId: String
+  deliveryNoteId: String
+  label: String
+  expiryDate: DateTime
+  cost: Float
+}
+
+input InventoryItemUpdateManyWithoutWarehouseInput {
+  create: [InventoryItemCreateWithoutWarehouseInput!]
+  delete: [InventoryItemWhereUniqueInput!]
+  connect: [InventoryItemWhereUniqueInput!]
+  set: [InventoryItemWhereUniqueInput!]
+  disconnect: [InventoryItemWhereUniqueInput!]
+  update: [InventoryItemUpdateWithWhereUniqueWithoutWarehouseInput!]
+  upsert: [InventoryItemUpsertWithWhereUniqueWithoutWarehouseInput!]
+  deleteMany: [InventoryItemScalarWhereInput!]
+  updateMany: [InventoryItemUpdateManyWithWhereNestedInput!]
+}
+
+input InventoryItemUpdateManyWithWhereNestedInput {
+  where: InventoryItemScalarWhereInput!
+  data: InventoryItemUpdateManyDataInput!
+}
+
+input InventoryItemUpdateWithoutWarehouseDataInput {
+  productId: ID
+  purchaseOrderId: String
+  deliveryNoteId: String
+  label: String
+  expiryDate: DateTime
+  cost: Float
+}
+
+input InventoryItemUpdateWithWhereUniqueWithoutWarehouseInput {
+  where: InventoryItemWhereUniqueInput!
+  data: InventoryItemUpdateWithoutWarehouseDataInput!
+}
+
+input InventoryItemUpsertWithWhereUniqueWithoutWarehouseInput {
+  where: InventoryItemWhereUniqueInput!
+  update: InventoryItemUpdateWithoutWarehouseDataInput!
+  create: InventoryItemCreateWithoutWarehouseInput!
+}
+
+input InventoryItemWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  warehouse: WarehouseWhereInput
+  productId: ID
+  productId_not: ID
+  productId_in: [ID!]
+  productId_not_in: [ID!]
+  productId_lt: ID
+  productId_lte: ID
+  productId_gt: ID
+  productId_gte: ID
+  productId_contains: ID
+  productId_not_contains: ID
+  productId_starts_with: ID
+  productId_not_starts_with: ID
+  productId_ends_with: ID
+  productId_not_ends_with: ID
+  purchaseOrderId: String
+  purchaseOrderId_not: String
+  purchaseOrderId_in: [String!]
+  purchaseOrderId_not_in: [String!]
+  purchaseOrderId_lt: String
+  purchaseOrderId_lte: String
+  purchaseOrderId_gt: String
+  purchaseOrderId_gte: String
+  purchaseOrderId_contains: String
+  purchaseOrderId_not_contains: String
+  purchaseOrderId_starts_with: String
+  purchaseOrderId_not_starts_with: String
+  purchaseOrderId_ends_with: String
+  purchaseOrderId_not_ends_with: String
+  deliveryNoteId: String
+  deliveryNoteId_not: String
+  deliveryNoteId_in: [String!]
+  deliveryNoteId_not_in: [String!]
+  deliveryNoteId_lt: String
+  deliveryNoteId_lte: String
+  deliveryNoteId_gt: String
+  deliveryNoteId_gte: String
+  deliveryNoteId_contains: String
+  deliveryNoteId_not_contains: String
+  deliveryNoteId_starts_with: String
+  deliveryNoteId_not_starts_with: String
+  deliveryNoteId_ends_with: String
+  deliveryNoteId_not_ends_with: String
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_lt: String
+  label_lte: String
+  label_gt: String
+  label_gte: String
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
+  expiryDate: DateTime
+  expiryDate_not: DateTime
+  expiryDate_in: [DateTime!]
+  expiryDate_not_in: [DateTime!]
+  expiryDate_lt: DateTime
+  expiryDate_lte: DateTime
+  expiryDate_gt: DateTime
+  expiryDate_gte: DateTime
+  cost: Float
+  cost_not: Float
+  cost_in: [Float!]
+  cost_not_in: [Float!]
+  cost_lt: Float
+  cost_lte: Float
+  cost_gt: Float
+  cost_gte: Float
+  AND: [InventoryItemWhereInput!]
+  OR: [InventoryItemWhereInput!]
+  NOT: [InventoryItemWhereInput!]
+}
+
+input InventoryItemWhereUniqueInput {
+  id: ID
+}
+
+scalar Long
+
+type Mutation {
+  createExpiryDateSummary(data: ExpiryDateSummaryCreateInput!): ExpiryDateSummary!
+  updateExpiryDateSummary(data: ExpiryDateSummaryUpdateInput!, where: ExpiryDateSummaryWhereUniqueInput!): ExpiryDateSummary
+  updateManyExpiryDateSummaries(data: ExpiryDateSummaryUpdateManyMutationInput!, where: ExpiryDateSummaryWhereInput): BatchPayload!
+  upsertExpiryDateSummary(where: ExpiryDateSummaryWhereUniqueInput!, create: ExpiryDateSummaryCreateInput!, update: ExpiryDateSummaryUpdateInput!): ExpiryDateSummary!
+  deleteExpiryDateSummary(where: ExpiryDateSummaryWhereUniqueInput!): ExpiryDateSummary
+  deleteManyExpiryDateSummaries(where: ExpiryDateSummaryWhereInput): BatchPayload!
+  createInventoryItem(data: InventoryItemCreateInput!): InventoryItem!
+  updateInventoryItem(data: InventoryItemUpdateInput!, where: InventoryItemWhereUniqueInput!): InventoryItem
+  updateManyInventoryItems(data: InventoryItemUpdateManyMutationInput!, where: InventoryItemWhereInput): BatchPayload!
+  upsertInventoryItem(where: InventoryItemWhereUniqueInput!, create: InventoryItemCreateInput!, update: InventoryItemUpdateInput!): InventoryItem!
+  deleteInventoryItem(where: InventoryItemWhereUniqueInput!): InventoryItem
+  deleteManyInventoryItems(where: InventoryItemWhereInput): BatchPayload!
+  createProductSummary(data: ProductSummaryCreateInput!): ProductSummary!
+  updateProductSummary(data: ProductSummaryUpdateInput!, where: ProductSummaryWhereUniqueInput!): ProductSummary
+  updateManyProductSummaries(data: ProductSummaryUpdateManyMutationInput!, where: ProductSummaryWhereInput): BatchPayload!
+  upsertProductSummary(where: ProductSummaryWhereUniqueInput!, create: ProductSummaryCreateInput!, update: ProductSummaryUpdateInput!): ProductSummary!
+  deleteProductSummary(where: ProductSummaryWhereUniqueInput!): ProductSummary
+  deleteManyProductSummaries(where: ProductSummaryWhereInput): BatchPayload!
+  createWarehouse(data: WarehouseCreateInput!): Warehouse!
+  updateWarehouse(data: WarehouseUpdateInput!, where: WarehouseWhereUniqueInput!): Warehouse
+  updateManyWarehouses(data: WarehouseUpdateManyMutationInput!, where: WarehouseWhereInput): BatchPayload!
+  upsertWarehouse(where: WarehouseWhereUniqueInput!, create: WarehouseCreateInput!, update: WarehouseUpdateInput!): Warehouse!
+  deleteWarehouse(where: WarehouseWhereUniqueInput!): Warehouse
+  deleteManyWarehouses(where: WarehouseWhereInput): BatchPayload!
+  createWarehouseSummary(data: WarehouseSummaryCreateInput!): WarehouseSummary!
+  updateWarehouseSummary(data: WarehouseSummaryUpdateInput!, where: WarehouseSummaryWhereUniqueInput!): WarehouseSummary
+  updateManyWarehouseSummaries(data: WarehouseSummaryUpdateManyMutationInput!, where: WarehouseSummaryWhereInput): BatchPayload!
+  upsertWarehouseSummary(where: WarehouseSummaryWhereUniqueInput!, create: WarehouseSummaryCreateInput!, update: WarehouseSummaryUpdateInput!): WarehouseSummary!
+  deleteWarehouseSummary(where: WarehouseSummaryWhereUniqueInput!): WarehouseSummary
+  deleteManyWarehouseSummaries(where: WarehouseSummaryWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type ProductSummary {
+  id: ID!
+  productId: ID!
+  incomingQuantity: Int!
+  outgoingQuantity: Int!
+  quantity: Int!
+}
+
+type ProductSummaryConnection {
+  pageInfo: PageInfo!
+  edges: [ProductSummaryEdge]!
+  aggregate: AggregateProductSummary!
+}
+
+input ProductSummaryCreateInput {
+  id: ID
+  productId: ID!
+  incomingQuantity: Int!
+  outgoingQuantity: Int!
+  quantity: Int!
+}
+
+type ProductSummaryEdge {
+  node: ProductSummary!
+  cursor: String!
+}
+
+enum ProductSummaryOrderByInput {
+  id_ASC
+  id_DESC
+  productId_ASC
+  productId_DESC
+  incomingQuantity_ASC
+  incomingQuantity_DESC
+  outgoingQuantity_ASC
+  outgoingQuantity_DESC
+  quantity_ASC
+  quantity_DESC
+}
+
+type ProductSummaryPreviousValues {
+  id: ID!
+  productId: ID!
+  incomingQuantity: Int!
+  outgoingQuantity: Int!
+  quantity: Int!
+}
+
+type ProductSummarySubscriptionPayload {
+  mutation: MutationType!
+  node: ProductSummary
+  updatedFields: [String!]
+  previousValues: ProductSummaryPreviousValues
+}
+
+input ProductSummarySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProductSummaryWhereInput
+  AND: [ProductSummarySubscriptionWhereInput!]
+  OR: [ProductSummarySubscriptionWhereInput!]
+  NOT: [ProductSummarySubscriptionWhereInput!]
+}
+
+input ProductSummaryUpdateInput {
+  productId: ID
+  incomingQuantity: Int
+  outgoingQuantity: Int
+  quantity: Int
+}
+
+input ProductSummaryUpdateManyMutationInput {
+  productId: ID
+  incomingQuantity: Int
+  outgoingQuantity: Int
+  quantity: Int
+}
+
+input ProductSummaryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  productId: ID
+  productId_not: ID
+  productId_in: [ID!]
+  productId_not_in: [ID!]
+  productId_lt: ID
+  productId_lte: ID
+  productId_gt: ID
+  productId_gte: ID
+  productId_contains: ID
+  productId_not_contains: ID
+  productId_starts_with: ID
+  productId_not_starts_with: ID
+  productId_ends_with: ID
+  productId_not_ends_with: ID
+  incomingQuantity: Int
+  incomingQuantity_not: Int
+  incomingQuantity_in: [Int!]
+  incomingQuantity_not_in: [Int!]
+  incomingQuantity_lt: Int
+  incomingQuantity_lte: Int
+  incomingQuantity_gt: Int
+  incomingQuantity_gte: Int
+  outgoingQuantity: Int
+  outgoingQuantity_not: Int
+  outgoingQuantity_in: [Int!]
+  outgoingQuantity_not_in: [Int!]
+  outgoingQuantity_lt: Int
+  outgoingQuantity_lte: Int
+  outgoingQuantity_gt: Int
+  outgoingQuantity_gte: Int
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  AND: [ProductSummaryWhereInput!]
+  OR: [ProductSummaryWhereInput!]
+  NOT: [ProductSummaryWhereInput!]
+}
+
+input ProductSummaryWhereUniqueInput {
+  id: ID
+  productId: ID
+}
+
+type Query {
+  expiryDateSummary(where: ExpiryDateSummaryWhereUniqueInput!): ExpiryDateSummary
+  expiryDateSummaries(where: ExpiryDateSummaryWhereInput, orderBy: ExpiryDateSummaryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ExpiryDateSummary]!
+  expiryDateSummariesConnection(where: ExpiryDateSummaryWhereInput, orderBy: ExpiryDateSummaryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ExpiryDateSummaryConnection!
+  inventoryItem(where: InventoryItemWhereUniqueInput!): InventoryItem
+  inventoryItems(where: InventoryItemWhereInput, orderBy: InventoryItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InventoryItem]!
+  inventoryItemsConnection(where: InventoryItemWhereInput, orderBy: InventoryItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InventoryItemConnection!
+  productSummary(where: ProductSummaryWhereUniqueInput!): ProductSummary
+  productSummaries(where: ProductSummaryWhereInput, orderBy: ProductSummaryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductSummary]!
+  productSummariesConnection(where: ProductSummaryWhereInput, orderBy: ProductSummaryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductSummaryConnection!
+  warehouse(where: WarehouseWhereUniqueInput!): Warehouse
+  warehouses(where: WarehouseWhereInput, orderBy: WarehouseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Warehouse]!
+  warehousesConnection(where: WarehouseWhereInput, orderBy: WarehouseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WarehouseConnection!
+  warehouseSummary(where: WarehouseSummaryWhereUniqueInput!): WarehouseSummary
+  warehouseSummaries(where: WarehouseSummaryWhereInput, orderBy: WarehouseSummaryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WarehouseSummary]!
+  warehouseSummariesConnection(where: WarehouseSummaryWhereInput, orderBy: WarehouseSummaryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WarehouseSummaryConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  expiryDateSummary(where: ExpiryDateSummarySubscriptionWhereInput): ExpiryDateSummarySubscriptionPayload
+  inventoryItem(where: InventoryItemSubscriptionWhereInput): InventoryItemSubscriptionPayload
+  productSummary(where: ProductSummarySubscriptionWhereInput): ProductSummarySubscriptionPayload
+  warehouse(where: WarehouseSubscriptionWhereInput): WarehouseSubscriptionPayload
+  warehouseSummary(where: WarehouseSummarySubscriptionWhereInput): WarehouseSummarySubscriptionPayload
+}
+
+type Warehouse {
+  id: ID!
+  name: String!
+  description: String
+  address: String
+  type: WarehouseType!
+  products(where: InventoryItemWhereInput, orderBy: InventoryItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InventoryItem!]
+  summaries(where: WarehouseSummaryWhereInput, orderBy: WarehouseSummaryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WarehouseSummary!]
+}
+
+type WarehouseConnection {
+  pageInfo: PageInfo!
+  edges: [WarehouseEdge]!
+  aggregate: AggregateWarehouse!
+}
+
+input WarehouseCreateInput {
+  id: ID
+  name: String!
+  description: String
+  address: String
+  type: WarehouseType!
+  products: InventoryItemCreateManyWithoutWarehouseInput
+  summaries: WarehouseSummaryCreateManyWithoutWarehouseInput
+}
+
+input WarehouseCreateOneWithoutProductsInput {
+  create: WarehouseCreateWithoutProductsInput
+  connect: WarehouseWhereUniqueInput
+}
+
+input WarehouseCreateOneWithoutSummariesInput {
+  create: WarehouseCreateWithoutSummariesInput
+  connect: WarehouseWhereUniqueInput
+}
+
+input WarehouseCreateWithoutProductsInput {
+  id: ID
+  name: String!
+  description: String
+  address: String
+  type: WarehouseType!
+  summaries: WarehouseSummaryCreateManyWithoutWarehouseInput
+}
+
+input WarehouseCreateWithoutSummariesInput {
+  id: ID
+  name: String!
+  description: String
+  address: String
+  type: WarehouseType!
+  products: InventoryItemCreateManyWithoutWarehouseInput
+}
+
+type WarehouseEdge {
+  node: Warehouse!
+  cursor: String!
+}
+
+enum WarehouseOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  address_ASC
+  address_DESC
+  type_ASC
+  type_DESC
+}
+
+type WarehousePreviousValues {
+  id: ID!
+  name: String!
+  description: String
+  address: String
+  type: WarehouseType!
+}
+
+type WarehouseSubscriptionPayload {
+  mutation: MutationType!
+  node: Warehouse
+  updatedFields: [String!]
+  previousValues: WarehousePreviousValues
+}
+
+input WarehouseSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: WarehouseWhereInput
+  AND: [WarehouseSubscriptionWhereInput!]
+  OR: [WarehouseSubscriptionWhereInput!]
+  NOT: [WarehouseSubscriptionWhereInput!]
+}
+
+type WarehouseSummary {
+  id: ID!
+  warehouse: Warehouse!
+  productId: ID!
+  quantity: Int!
+}
+
+type WarehouseSummaryConnection {
+  pageInfo: PageInfo!
+  edges: [WarehouseSummaryEdge]!
+  aggregate: AggregateWarehouseSummary!
+}
+
+input WarehouseSummaryCreateInput {
+  id: ID
+  warehouse: WarehouseCreateOneWithoutSummariesInput!
+  productId: ID!
+  quantity: Int!
+}
+
+input WarehouseSummaryCreateManyWithoutWarehouseInput {
+  create: [WarehouseSummaryCreateWithoutWarehouseInput!]
+  connect: [WarehouseSummaryWhereUniqueInput!]
+}
+
+input WarehouseSummaryCreateWithoutWarehouseInput {
+  id: ID
+  productId: ID!
+  quantity: Int!
+}
+
+type WarehouseSummaryEdge {
+  node: WarehouseSummary!
+  cursor: String!
+}
+
+enum WarehouseSummaryOrderByInput {
+  id_ASC
+  id_DESC
+  productId_ASC
+  productId_DESC
+  quantity_ASC
+  quantity_DESC
+}
+
+type WarehouseSummaryPreviousValues {
+  id: ID!
+  productId: ID!
+  quantity: Int!
+}
+
+input WarehouseSummaryScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  productId: ID
+  productId_not: ID
+  productId_in: [ID!]
+  productId_not_in: [ID!]
+  productId_lt: ID
+  productId_lte: ID
+  productId_gt: ID
+  productId_gte: ID
+  productId_contains: ID
+  productId_not_contains: ID
+  productId_starts_with: ID
+  productId_not_starts_with: ID
+  productId_ends_with: ID
+  productId_not_ends_with: ID
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  AND: [WarehouseSummaryScalarWhereInput!]
+  OR: [WarehouseSummaryScalarWhereInput!]
+  NOT: [WarehouseSummaryScalarWhereInput!]
+}
+
+type WarehouseSummarySubscriptionPayload {
+  mutation: MutationType!
+  node: WarehouseSummary
+  updatedFields: [String!]
+  previousValues: WarehouseSummaryPreviousValues
+}
+
+input WarehouseSummarySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: WarehouseSummaryWhereInput
+  AND: [WarehouseSummarySubscriptionWhereInput!]
+  OR: [WarehouseSummarySubscriptionWhereInput!]
+  NOT: [WarehouseSummarySubscriptionWhereInput!]
+}
+
+input WarehouseSummaryUpdateInput {
+  warehouse: WarehouseUpdateOneRequiredWithoutSummariesInput
+  productId: ID
+  quantity: Int
+}
+
+input WarehouseSummaryUpdateManyDataInput {
+  productId: ID
+  quantity: Int
+}
+
+input WarehouseSummaryUpdateManyMutationInput {
+  productId: ID
+  quantity: Int
+}
+
+input WarehouseSummaryUpdateManyWithoutWarehouseInput {
+  create: [WarehouseSummaryCreateWithoutWarehouseInput!]
+  delete: [WarehouseSummaryWhereUniqueInput!]
+  connect: [WarehouseSummaryWhereUniqueInput!]
+  set: [WarehouseSummaryWhereUniqueInput!]
+  disconnect: [WarehouseSummaryWhereUniqueInput!]
+  update: [WarehouseSummaryUpdateWithWhereUniqueWithoutWarehouseInput!]
+  upsert: [WarehouseSummaryUpsertWithWhereUniqueWithoutWarehouseInput!]
+  deleteMany: [WarehouseSummaryScalarWhereInput!]
+  updateMany: [WarehouseSummaryUpdateManyWithWhereNestedInput!]
+}
+
+input WarehouseSummaryUpdateManyWithWhereNestedInput {
+  where: WarehouseSummaryScalarWhereInput!
+  data: WarehouseSummaryUpdateManyDataInput!
+}
+
+input WarehouseSummaryUpdateWithoutWarehouseDataInput {
+  productId: ID
+  quantity: Int
+}
+
+input WarehouseSummaryUpdateWithWhereUniqueWithoutWarehouseInput {
+  where: WarehouseSummaryWhereUniqueInput!
+  data: WarehouseSummaryUpdateWithoutWarehouseDataInput!
+}
+
+input WarehouseSummaryUpsertWithWhereUniqueWithoutWarehouseInput {
+  where: WarehouseSummaryWhereUniqueInput!
+  update: WarehouseSummaryUpdateWithoutWarehouseDataInput!
+  create: WarehouseSummaryCreateWithoutWarehouseInput!
+}
+
+input WarehouseSummaryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  warehouse: WarehouseWhereInput
+  productId: ID
+  productId_not: ID
+  productId_in: [ID!]
+  productId_not_in: [ID!]
+  productId_lt: ID
+  productId_lte: ID
+  productId_gt: ID
+  productId_gte: ID
+  productId_contains: ID
+  productId_not_contains: ID
+  productId_starts_with: ID
+  productId_not_starts_with: ID
+  productId_ends_with: ID
+  productId_not_ends_with: ID
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  AND: [WarehouseSummaryWhereInput!]
+  OR: [WarehouseSummaryWhereInput!]
+  NOT: [WarehouseSummaryWhereInput!]
+}
+
+input WarehouseSummaryWhereUniqueInput {
+  id: ID
+}
+
+enum WarehouseType {
+  PENDING
+  NORMAL
+  DISPOSE
+  TEMPORARY
+  MARKETING
+  OUT
+  OUTGOING
+}
+
+input WarehouseUpdateInput {
+  name: String
+  description: String
+  address: String
+  type: WarehouseType
+  products: InventoryItemUpdateManyWithoutWarehouseInput
+  summaries: WarehouseSummaryUpdateManyWithoutWarehouseInput
+}
+
+input WarehouseUpdateManyMutationInput {
+  name: String
+  description: String
+  address: String
+  type: WarehouseType
+}
+
+input WarehouseUpdateOneRequiredWithoutProductsInput {
+  create: WarehouseCreateWithoutProductsInput
+  update: WarehouseUpdateWithoutProductsDataInput
+  upsert: WarehouseUpsertWithoutProductsInput
+  connect: WarehouseWhereUniqueInput
+}
+
+input WarehouseUpdateOneRequiredWithoutSummariesInput {
+  create: WarehouseCreateWithoutSummariesInput
+  update: WarehouseUpdateWithoutSummariesDataInput
+  upsert: WarehouseUpsertWithoutSummariesInput
+  connect: WarehouseWhereUniqueInput
+}
+
+input WarehouseUpdateWithoutProductsDataInput {
+  name: String
+  description: String
+  address: String
+  type: WarehouseType
+  summaries: WarehouseSummaryUpdateManyWithoutWarehouseInput
+}
+
+input WarehouseUpdateWithoutSummariesDataInput {
+  name: String
+  description: String
+  address: String
+  type: WarehouseType
+  products: InventoryItemUpdateManyWithoutWarehouseInput
+}
+
+input WarehouseUpsertWithoutProductsInput {
+  update: WarehouseUpdateWithoutProductsDataInput!
+  create: WarehouseCreateWithoutProductsInput!
+}
+
+input WarehouseUpsertWithoutSummariesInput {
+  update: WarehouseUpdateWithoutSummariesDataInput!
+  create: WarehouseCreateWithoutSummariesInput!
+}
+
+input WarehouseWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  type: WarehouseType
+  type_not: WarehouseType
+  type_in: [WarehouseType!]
+  type_not_in: [WarehouseType!]
+  products_every: InventoryItemWhereInput
+  products_some: InventoryItemWhereInput
+  products_none: InventoryItemWhereInput
+  summaries_every: WarehouseSummaryWhereInput
+  summaries_some: WarehouseSummaryWhereInput
+  summaries_none: WarehouseSummaryWhereInput
+  AND: [WarehouseWhereInput!]
+  OR: [WarehouseWhereInput!]
+  NOT: [WarehouseWhereInput!]
+}
+
+input WarehouseWhereUniqueInput {
+  id: ID
+  name: String
+}

@@ -1,0 +1,541 @@
+type AggregateAuth {
+  count: Int!
+}
+
+type AggregateContact {
+  count: Int!
+}
+
+type AggregateRedirect {
+  count: Int!
+}
+
+type AggregateXeroUser {
+  count: Int!
+}
+
+type Auth {
+  id: ID!
+  apiUrl: String
+}
+
+type AuthConnection {
+  pageInfo: PageInfo!
+  edges: [AuthEdge]!
+  aggregate: AggregateAuth!
+}
+
+input AuthCreateInput {
+  id: ID
+  apiUrl: String
+}
+
+type AuthEdge {
+  node: Auth!
+  cursor: String!
+}
+
+enum AuthOrderByInput {
+  id_ASC
+  id_DESC
+  apiUrl_ASC
+  apiUrl_DESC
+}
+
+type AuthPreviousValues {
+  id: ID!
+  apiUrl: String
+}
+
+type AuthSubscriptionPayload {
+  mutation: MutationType!
+  node: Auth
+  updatedFields: [String!]
+  previousValues: AuthPreviousValues
+}
+
+input AuthSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AuthWhereInput
+  AND: [AuthSubscriptionWhereInput!]
+  OR: [AuthSubscriptionWhereInput!]
+  NOT: [AuthSubscriptionWhereInput!]
+}
+
+input AuthUpdateInput {
+  apiUrl: String
+}
+
+input AuthUpdateManyMutationInput {
+  apiUrl: String
+}
+
+input AuthWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  apiUrl: String
+  apiUrl_not: String
+  apiUrl_in: [String!]
+  apiUrl_not_in: [String!]
+  apiUrl_lt: String
+  apiUrl_lte: String
+  apiUrl_gt: String
+  apiUrl_gte: String
+  apiUrl_contains: String
+  apiUrl_not_contains: String
+  apiUrl_starts_with: String
+  apiUrl_not_starts_with: String
+  apiUrl_ends_with: String
+  apiUrl_not_ends_with: String
+  AND: [AuthWhereInput!]
+  OR: [AuthWhereInput!]
+  NOT: [AuthWhereInput!]
+}
+
+input AuthWhereUniqueInput {
+  id: ID
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+type Contact {
+  id: ID!
+  code: String!
+  xeroId: String!
+}
+
+type ContactConnection {
+  pageInfo: PageInfo!
+  edges: [ContactEdge]!
+  aggregate: AggregateContact!
+}
+
+input ContactCreateInput {
+  id: ID
+  code: String!
+  xeroId: String!
+}
+
+type ContactEdge {
+  node: Contact!
+  cursor: String!
+}
+
+enum ContactOrderByInput {
+  id_ASC
+  id_DESC
+  code_ASC
+  code_DESC
+  xeroId_ASC
+  xeroId_DESC
+}
+
+type ContactPreviousValues {
+  id: ID!
+  code: String!
+  xeroId: String!
+}
+
+type ContactSubscriptionPayload {
+  mutation: MutationType!
+  node: Contact
+  updatedFields: [String!]
+  previousValues: ContactPreviousValues
+}
+
+input ContactSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ContactWhereInput
+  AND: [ContactSubscriptionWhereInput!]
+  OR: [ContactSubscriptionWhereInput!]
+  NOT: [ContactSubscriptionWhereInput!]
+}
+
+input ContactUpdateInput {
+  code: String
+  xeroId: String
+}
+
+input ContactUpdateManyMutationInput {
+  code: String
+  xeroId: String
+}
+
+input ContactWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  xeroId: String
+  xeroId_not: String
+  xeroId_in: [String!]
+  xeroId_not_in: [String!]
+  xeroId_lt: String
+  xeroId_lte: String
+  xeroId_gt: String
+  xeroId_gte: String
+  xeroId_contains: String
+  xeroId_not_contains: String
+  xeroId_starts_with: String
+  xeroId_not_starts_with: String
+  xeroId_ends_with: String
+  xeroId_not_ends_with: String
+  AND: [ContactWhereInput!]
+  OR: [ContactWhereInput!]
+  NOT: [ContactWhereInput!]
+}
+
+input ContactWhereUniqueInput {
+  id: ID
+  code: String
+  xeroId: String
+}
+
+scalar Long
+
+type Mutation {
+  createAuth(data: AuthCreateInput!): Auth!
+  updateAuth(data: AuthUpdateInput!, where: AuthWhereUniqueInput!): Auth
+  updateManyAuths(data: AuthUpdateManyMutationInput!, where: AuthWhereInput): BatchPayload!
+  upsertAuth(where: AuthWhereUniqueInput!, create: AuthCreateInput!, update: AuthUpdateInput!): Auth!
+  deleteAuth(where: AuthWhereUniqueInput!): Auth
+  deleteManyAuths(where: AuthWhereInput): BatchPayload!
+  createContact(data: ContactCreateInput!): Contact!
+  updateContact(data: ContactUpdateInput!, where: ContactWhereUniqueInput!): Contact
+  updateManyContacts(data: ContactUpdateManyMutationInput!, where: ContactWhereInput): BatchPayload!
+  upsertContact(where: ContactWhereUniqueInput!, create: ContactCreateInput!, update: ContactUpdateInput!): Contact!
+  deleteContact(where: ContactWhereUniqueInput!): Contact
+  deleteManyContacts(where: ContactWhereInput): BatchPayload!
+  createRedirect(data: RedirectCreateInput!): Redirect!
+  updateRedirect(data: RedirectUpdateInput!, where: RedirectWhereUniqueInput!): Redirect
+  updateManyRedirects(data: RedirectUpdateManyMutationInput!, where: RedirectWhereInput): BatchPayload!
+  upsertRedirect(where: RedirectWhereUniqueInput!, create: RedirectCreateInput!, update: RedirectUpdateInput!): Redirect!
+  deleteRedirect(where: RedirectWhereUniqueInput!): Redirect
+  deleteManyRedirects(where: RedirectWhereInput): BatchPayload!
+  createXeroUser(data: XeroUserCreateInput!): XeroUser!
+  updateXeroUser(data: XeroUserUpdateInput!, where: XeroUserWhereUniqueInput!): XeroUser
+  updateManyXeroUsers(data: XeroUserUpdateManyMutationInput!, where: XeroUserWhereInput): BatchPayload!
+  upsertXeroUser(where: XeroUserWhereUniqueInput!, create: XeroUserCreateInput!, update: XeroUserUpdateInput!): XeroUser!
+  deleteXeroUser(where: XeroUserWhereUniqueInput!): XeroUser
+  deleteManyXeroUsers(where: XeroUserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  auth(where: AuthWhereUniqueInput!): Auth
+  auths(where: AuthWhereInput, orderBy: AuthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Auth]!
+  authsConnection(where: AuthWhereInput, orderBy: AuthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AuthConnection!
+  contact(where: ContactWhereUniqueInput!): Contact
+  contacts(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact]!
+  contactsConnection(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContactConnection!
+  redirect(where: RedirectWhereUniqueInput!): Redirect
+  redirects(where: RedirectWhereInput, orderBy: RedirectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Redirect]!
+  redirectsConnection(where: RedirectWhereInput, orderBy: RedirectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RedirectConnection!
+  xeroUser(where: XeroUserWhereUniqueInput!): XeroUser
+  xeroUsers(where: XeroUserWhereInput, orderBy: XeroUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [XeroUser]!
+  xeroUsersConnection(where: XeroUserWhereInput, orderBy: XeroUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): XeroUserConnection!
+  node(id: ID!): Node
+}
+
+type Redirect {
+  id: ID!
+  redirectUrl: String
+}
+
+type RedirectConnection {
+  pageInfo: PageInfo!
+  edges: [RedirectEdge]!
+  aggregate: AggregateRedirect!
+}
+
+input RedirectCreateInput {
+  id: ID
+  redirectUrl: String
+}
+
+type RedirectEdge {
+  node: Redirect!
+  cursor: String!
+}
+
+enum RedirectOrderByInput {
+  id_ASC
+  id_DESC
+  redirectUrl_ASC
+  redirectUrl_DESC
+}
+
+type RedirectPreviousValues {
+  id: ID!
+  redirectUrl: String
+}
+
+type RedirectSubscriptionPayload {
+  mutation: MutationType!
+  node: Redirect
+  updatedFields: [String!]
+  previousValues: RedirectPreviousValues
+}
+
+input RedirectSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RedirectWhereInput
+  AND: [RedirectSubscriptionWhereInput!]
+  OR: [RedirectSubscriptionWhereInput!]
+  NOT: [RedirectSubscriptionWhereInput!]
+}
+
+input RedirectUpdateInput {
+  redirectUrl: String
+}
+
+input RedirectUpdateManyMutationInput {
+  redirectUrl: String
+}
+
+input RedirectWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  redirectUrl: String
+  redirectUrl_not: String
+  redirectUrl_in: [String!]
+  redirectUrl_not_in: [String!]
+  redirectUrl_lt: String
+  redirectUrl_lte: String
+  redirectUrl_gt: String
+  redirectUrl_gte: String
+  redirectUrl_contains: String
+  redirectUrl_not_contains: String
+  redirectUrl_starts_with: String
+  redirectUrl_not_starts_with: String
+  redirectUrl_ends_with: String
+  redirectUrl_not_ends_with: String
+  AND: [RedirectWhereInput!]
+  OR: [RedirectWhereInput!]
+  NOT: [RedirectWhereInput!]
+}
+
+input RedirectWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  auth(where: AuthSubscriptionWhereInput): AuthSubscriptionPayload
+  contact(where: ContactSubscriptionWhereInput): ContactSubscriptionPayload
+  redirect(where: RedirectSubscriptionWhereInput): RedirectSubscriptionPayload
+  xeroUser(where: XeroUserSubscriptionWhereInput): XeroUserSubscriptionPayload
+}
+
+type XeroUser {
+  id: ID!
+  accessToken: String!
+  refreshToken: String!
+  tenantId: String!
+}
+
+type XeroUserConnection {
+  pageInfo: PageInfo!
+  edges: [XeroUserEdge]!
+  aggregate: AggregateXeroUser!
+}
+
+input XeroUserCreateInput {
+  id: ID
+  accessToken: String!
+  refreshToken: String!
+  tenantId: String!
+}
+
+type XeroUserEdge {
+  node: XeroUser!
+  cursor: String!
+}
+
+enum XeroUserOrderByInput {
+  id_ASC
+  id_DESC
+  accessToken_ASC
+  accessToken_DESC
+  refreshToken_ASC
+  refreshToken_DESC
+  tenantId_ASC
+  tenantId_DESC
+}
+
+type XeroUserPreviousValues {
+  id: ID!
+  accessToken: String!
+  refreshToken: String!
+  tenantId: String!
+}
+
+type XeroUserSubscriptionPayload {
+  mutation: MutationType!
+  node: XeroUser
+  updatedFields: [String!]
+  previousValues: XeroUserPreviousValues
+}
+
+input XeroUserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: XeroUserWhereInput
+  AND: [XeroUserSubscriptionWhereInput!]
+  OR: [XeroUserSubscriptionWhereInput!]
+  NOT: [XeroUserSubscriptionWhereInput!]
+}
+
+input XeroUserUpdateInput {
+  accessToken: String
+  refreshToken: String
+  tenantId: String
+}
+
+input XeroUserUpdateManyMutationInput {
+  accessToken: String
+  refreshToken: String
+  tenantId: String
+}
+
+input XeroUserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  accessToken: String
+  accessToken_not: String
+  accessToken_in: [String!]
+  accessToken_not_in: [String!]
+  accessToken_lt: String
+  accessToken_lte: String
+  accessToken_gt: String
+  accessToken_gte: String
+  accessToken_contains: String
+  accessToken_not_contains: String
+  accessToken_starts_with: String
+  accessToken_not_starts_with: String
+  accessToken_ends_with: String
+  accessToken_not_ends_with: String
+  refreshToken: String
+  refreshToken_not: String
+  refreshToken_in: [String!]
+  refreshToken_not_in: [String!]
+  refreshToken_lt: String
+  refreshToken_lte: String
+  refreshToken_gt: String
+  refreshToken_gte: String
+  refreshToken_contains: String
+  refreshToken_not_contains: String
+  refreshToken_starts_with: String
+  refreshToken_not_starts_with: String
+  refreshToken_ends_with: String
+  refreshToken_not_ends_with: String
+  tenantId: String
+  tenantId_not: String
+  tenantId_in: [String!]
+  tenantId_not_in: [String!]
+  tenantId_lt: String
+  tenantId_lte: String
+  tenantId_gt: String
+  tenantId_gte: String
+  tenantId_contains: String
+  tenantId_not_contains: String
+  tenantId_starts_with: String
+  tenantId_not_starts_with: String
+  tenantId_ends_with: String
+  tenantId_not_ends_with: String
+  AND: [XeroUserWhereInput!]
+  OR: [XeroUserWhereInput!]
+  NOT: [XeroUserWhereInput!]
+}
+
+input XeroUserWhereUniqueInput {
+  id: ID
+}

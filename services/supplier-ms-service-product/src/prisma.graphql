@@ -1,0 +1,1507 @@
+type AggregateProduct {
+  count: Int!
+}
+
+type AggregateProductCategory {
+  count: Int!
+}
+
+type AggregateProductImage {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar DateTime
+
+scalar Long
+
+type Mutation {
+  createProduct(data: ProductCreateInput!): Product!
+  updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
+  updateManyProducts(data: ProductUpdateManyMutationInput!, where: ProductWhereInput): BatchPayload!
+  upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
+  deleteProduct(where: ProductWhereUniqueInput!): Product
+  deleteManyProducts(where: ProductWhereInput): BatchPayload!
+  createProductCategory(data: ProductCategoryCreateInput!): ProductCategory!
+  updateProductCategory(data: ProductCategoryUpdateInput!, where: ProductCategoryWhereUniqueInput!): ProductCategory
+  updateManyProductCategories(data: ProductCategoryUpdateManyMutationInput!, where: ProductCategoryWhereInput): BatchPayload!
+  upsertProductCategory(where: ProductCategoryWhereUniqueInput!, create: ProductCategoryCreateInput!, update: ProductCategoryUpdateInput!): ProductCategory!
+  deleteProductCategory(where: ProductCategoryWhereUniqueInput!): ProductCategory
+  deleteManyProductCategories(where: ProductCategoryWhereInput): BatchPayload!
+  createProductImage(data: ProductImageCreateInput!): ProductImage!
+  updateManyProductImages(data: ProductImageUpdateManyMutationInput!, where: ProductImageWhereInput): BatchPayload!
+  deleteManyProductImages(where: ProductImageWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Product {
+  id: ID!
+  code: String!
+  brandEn: String!
+  brandChi: String!
+  nameEn: String!
+  nameChi: String!
+  discount: String
+  package: Int!
+  weight: String!
+  shortDescription: String
+  longDescription: String
+  images(where: ProductImageWhereInput, orderBy: ProductImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductImage!]
+  sku: String
+  upc: String!
+  cost: Float!
+  printInLabel: Boolean
+  printInInvoice: Boolean
+  printInDN: Boolean
+  wholeSalePrice1: Float!
+  wholeSalePrice2: Float!
+  wholeSalePrice3: Float!
+  wholeSalePrice4: Float!
+  wholeSalePrice5: Float!
+  retailPrice1: Float!
+  retailPrice2: Float!
+  retailPrice3: Float!
+  retailPrice4: Float!
+  retailPrice5: Float!
+  minOrderQuantity: Float!
+  minStockLevel: Float!
+  onlineDate: DateTime
+  offlineDate: DateTime
+  categories(where: ProductCategoryWhereInput, orderBy: ProductCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductCategory!]
+}
+
+type ProductCategory {
+  id: ID!
+  nameEn: String!
+  nameChi: String!
+  detail: String
+  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]
+}
+
+type ProductCategoryConnection {
+  pageInfo: PageInfo!
+  edges: [ProductCategoryEdge]!
+  aggregate: AggregateProductCategory!
+}
+
+input ProductCategoryCreateInput {
+  id: ID
+  nameEn: String!
+  nameChi: String!
+  detail: String
+  products: ProductCreateManyWithoutCategoriesInput
+}
+
+input ProductCategoryCreateManyWithoutProductsInput {
+  create: [ProductCategoryCreateWithoutProductsInput!]
+  connect: [ProductCategoryWhereUniqueInput!]
+}
+
+input ProductCategoryCreateWithoutProductsInput {
+  id: ID
+  nameEn: String!
+  nameChi: String!
+  detail: String
+}
+
+type ProductCategoryEdge {
+  node: ProductCategory!
+  cursor: String!
+}
+
+enum ProductCategoryOrderByInput {
+  id_ASC
+  id_DESC
+  nameEn_ASC
+  nameEn_DESC
+  nameChi_ASC
+  nameChi_DESC
+  detail_ASC
+  detail_DESC
+}
+
+type ProductCategoryPreviousValues {
+  id: ID!
+  nameEn: String!
+  nameChi: String!
+  detail: String
+}
+
+input ProductCategoryScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  nameEn: String
+  nameEn_not: String
+  nameEn_in: [String!]
+  nameEn_not_in: [String!]
+  nameEn_lt: String
+  nameEn_lte: String
+  nameEn_gt: String
+  nameEn_gte: String
+  nameEn_contains: String
+  nameEn_not_contains: String
+  nameEn_starts_with: String
+  nameEn_not_starts_with: String
+  nameEn_ends_with: String
+  nameEn_not_ends_with: String
+  nameChi: String
+  nameChi_not: String
+  nameChi_in: [String!]
+  nameChi_not_in: [String!]
+  nameChi_lt: String
+  nameChi_lte: String
+  nameChi_gt: String
+  nameChi_gte: String
+  nameChi_contains: String
+  nameChi_not_contains: String
+  nameChi_starts_with: String
+  nameChi_not_starts_with: String
+  nameChi_ends_with: String
+  nameChi_not_ends_with: String
+  detail: String
+  detail_not: String
+  detail_in: [String!]
+  detail_not_in: [String!]
+  detail_lt: String
+  detail_lte: String
+  detail_gt: String
+  detail_gte: String
+  detail_contains: String
+  detail_not_contains: String
+  detail_starts_with: String
+  detail_not_starts_with: String
+  detail_ends_with: String
+  detail_not_ends_with: String
+  AND: [ProductCategoryScalarWhereInput!]
+  OR: [ProductCategoryScalarWhereInput!]
+  NOT: [ProductCategoryScalarWhereInput!]
+}
+
+type ProductCategorySubscriptionPayload {
+  mutation: MutationType!
+  node: ProductCategory
+  updatedFields: [String!]
+  previousValues: ProductCategoryPreviousValues
+}
+
+input ProductCategorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProductCategoryWhereInput
+  AND: [ProductCategorySubscriptionWhereInput!]
+  OR: [ProductCategorySubscriptionWhereInput!]
+  NOT: [ProductCategorySubscriptionWhereInput!]
+}
+
+input ProductCategoryUpdateInput {
+  nameEn: String
+  nameChi: String
+  detail: String
+  products: ProductUpdateManyWithoutCategoriesInput
+}
+
+input ProductCategoryUpdateManyDataInput {
+  nameEn: String
+  nameChi: String
+  detail: String
+}
+
+input ProductCategoryUpdateManyMutationInput {
+  nameEn: String
+  nameChi: String
+  detail: String
+}
+
+input ProductCategoryUpdateManyWithoutProductsInput {
+  create: [ProductCategoryCreateWithoutProductsInput!]
+  delete: [ProductCategoryWhereUniqueInput!]
+  connect: [ProductCategoryWhereUniqueInput!]
+  set: [ProductCategoryWhereUniqueInput!]
+  disconnect: [ProductCategoryWhereUniqueInput!]
+  update: [ProductCategoryUpdateWithWhereUniqueWithoutProductsInput!]
+  upsert: [ProductCategoryUpsertWithWhereUniqueWithoutProductsInput!]
+  deleteMany: [ProductCategoryScalarWhereInput!]
+  updateMany: [ProductCategoryUpdateManyWithWhereNestedInput!]
+}
+
+input ProductCategoryUpdateManyWithWhereNestedInput {
+  where: ProductCategoryScalarWhereInput!
+  data: ProductCategoryUpdateManyDataInput!
+}
+
+input ProductCategoryUpdateWithoutProductsDataInput {
+  nameEn: String
+  nameChi: String
+  detail: String
+}
+
+input ProductCategoryUpdateWithWhereUniqueWithoutProductsInput {
+  where: ProductCategoryWhereUniqueInput!
+  data: ProductCategoryUpdateWithoutProductsDataInput!
+}
+
+input ProductCategoryUpsertWithWhereUniqueWithoutProductsInput {
+  where: ProductCategoryWhereUniqueInput!
+  update: ProductCategoryUpdateWithoutProductsDataInput!
+  create: ProductCategoryCreateWithoutProductsInput!
+}
+
+input ProductCategoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  nameEn: String
+  nameEn_not: String
+  nameEn_in: [String!]
+  nameEn_not_in: [String!]
+  nameEn_lt: String
+  nameEn_lte: String
+  nameEn_gt: String
+  nameEn_gte: String
+  nameEn_contains: String
+  nameEn_not_contains: String
+  nameEn_starts_with: String
+  nameEn_not_starts_with: String
+  nameEn_ends_with: String
+  nameEn_not_ends_with: String
+  nameChi: String
+  nameChi_not: String
+  nameChi_in: [String!]
+  nameChi_not_in: [String!]
+  nameChi_lt: String
+  nameChi_lte: String
+  nameChi_gt: String
+  nameChi_gte: String
+  nameChi_contains: String
+  nameChi_not_contains: String
+  nameChi_starts_with: String
+  nameChi_not_starts_with: String
+  nameChi_ends_with: String
+  nameChi_not_ends_with: String
+  detail: String
+  detail_not: String
+  detail_in: [String!]
+  detail_not_in: [String!]
+  detail_lt: String
+  detail_lte: String
+  detail_gt: String
+  detail_gte: String
+  detail_contains: String
+  detail_not_contains: String
+  detail_starts_with: String
+  detail_not_starts_with: String
+  detail_ends_with: String
+  detail_not_ends_with: String
+  products_every: ProductWhereInput
+  products_some: ProductWhereInput
+  products_none: ProductWhereInput
+  AND: [ProductCategoryWhereInput!]
+  OR: [ProductCategoryWhereInput!]
+  NOT: [ProductCategoryWhereInput!]
+}
+
+input ProductCategoryWhereUniqueInput {
+  id: ID
+  nameEn: String
+  nameChi: String
+}
+
+type ProductConnection {
+  pageInfo: PageInfo!
+  edges: [ProductEdge]!
+  aggregate: AggregateProduct!
+}
+
+input ProductCreateInput {
+  id: ID
+  code: String!
+  brandEn: String!
+  brandChi: String!
+  nameEn: String!
+  nameChi: String!
+  discount: String
+  package: Int!
+  weight: String!
+  shortDescription: String
+  longDescription: String
+  images: ProductImageCreateManyInput
+  sku: String
+  upc: String!
+  cost: Float!
+  printInLabel: Boolean
+  printInInvoice: Boolean
+  printInDN: Boolean
+  wholeSalePrice1: Float!
+  wholeSalePrice2: Float!
+  wholeSalePrice3: Float!
+  wholeSalePrice4: Float!
+  wholeSalePrice5: Float!
+  retailPrice1: Float!
+  retailPrice2: Float!
+  retailPrice3: Float!
+  retailPrice4: Float!
+  retailPrice5: Float!
+  minOrderQuantity: Float
+  minStockLevel: Float
+  onlineDate: DateTime
+  offlineDate: DateTime
+  categories: ProductCategoryCreateManyWithoutProductsInput
+}
+
+input ProductCreateManyWithoutCategoriesInput {
+  create: [ProductCreateWithoutCategoriesInput!]
+  connect: [ProductWhereUniqueInput!]
+}
+
+input ProductCreateWithoutCategoriesInput {
+  id: ID
+  code: String!
+  brandEn: String!
+  brandChi: String!
+  nameEn: String!
+  nameChi: String!
+  discount: String
+  package: Int!
+  weight: String!
+  shortDescription: String
+  longDescription: String
+  images: ProductImageCreateManyInput
+  sku: String
+  upc: String!
+  cost: Float!
+  printInLabel: Boolean
+  printInInvoice: Boolean
+  printInDN: Boolean
+  wholeSalePrice1: Float!
+  wholeSalePrice2: Float!
+  wholeSalePrice3: Float!
+  wholeSalePrice4: Float!
+  wholeSalePrice5: Float!
+  retailPrice1: Float!
+  retailPrice2: Float!
+  retailPrice3: Float!
+  retailPrice4: Float!
+  retailPrice5: Float!
+  minOrderQuantity: Float
+  minStockLevel: Float
+  onlineDate: DateTime
+  offlineDate: DateTime
+}
+
+type ProductEdge {
+  node: Product!
+  cursor: String!
+}
+
+type ProductImage {
+  src: String!
+  title: String!
+}
+
+type ProductImageConnection {
+  pageInfo: PageInfo!
+  edges: [ProductImageEdge]!
+  aggregate: AggregateProductImage!
+}
+
+input ProductImageCreateInput {
+  src: String!
+  title: String!
+}
+
+input ProductImageCreateManyInput {
+  create: [ProductImageCreateInput!]
+}
+
+type ProductImageEdge {
+  node: ProductImage!
+  cursor: String!
+}
+
+enum ProductImageOrderByInput {
+  src_ASC
+  src_DESC
+  title_ASC
+  title_DESC
+}
+
+type ProductImagePreviousValues {
+  src: String!
+  title: String!
+}
+
+input ProductImageScalarWhereInput {
+  src: String
+  src_not: String
+  src_in: [String!]
+  src_not_in: [String!]
+  src_lt: String
+  src_lte: String
+  src_gt: String
+  src_gte: String
+  src_contains: String
+  src_not_contains: String
+  src_starts_with: String
+  src_not_starts_with: String
+  src_ends_with: String
+  src_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  AND: [ProductImageScalarWhereInput!]
+  OR: [ProductImageScalarWhereInput!]
+  NOT: [ProductImageScalarWhereInput!]
+}
+
+type ProductImageSubscriptionPayload {
+  mutation: MutationType!
+  node: ProductImage
+  updatedFields: [String!]
+  previousValues: ProductImagePreviousValues
+}
+
+input ProductImageSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProductImageWhereInput
+  AND: [ProductImageSubscriptionWhereInput!]
+  OR: [ProductImageSubscriptionWhereInput!]
+  NOT: [ProductImageSubscriptionWhereInput!]
+}
+
+input ProductImageUpdateManyDataInput {
+  src: String
+  title: String
+}
+
+input ProductImageUpdateManyInput {
+  create: [ProductImageCreateInput!]
+  deleteMany: [ProductImageScalarWhereInput!]
+  updateMany: [ProductImageUpdateManyWithWhereNestedInput!]
+}
+
+input ProductImageUpdateManyMutationInput {
+  src: String
+  title: String
+}
+
+input ProductImageUpdateManyWithWhereNestedInput {
+  where: ProductImageScalarWhereInput!
+  data: ProductImageUpdateManyDataInput!
+}
+
+input ProductImageWhereInput {
+  src: String
+  src_not: String
+  src_in: [String!]
+  src_not_in: [String!]
+  src_lt: String
+  src_lte: String
+  src_gt: String
+  src_gte: String
+  src_contains: String
+  src_not_contains: String
+  src_starts_with: String
+  src_not_starts_with: String
+  src_ends_with: String
+  src_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  AND: [ProductImageWhereInput!]
+  OR: [ProductImageWhereInput!]
+  NOT: [ProductImageWhereInput!]
+}
+
+enum ProductOrderByInput {
+  id_ASC
+  id_DESC
+  code_ASC
+  code_DESC
+  brandEn_ASC
+  brandEn_DESC
+  brandChi_ASC
+  brandChi_DESC
+  nameEn_ASC
+  nameEn_DESC
+  nameChi_ASC
+  nameChi_DESC
+  discount_ASC
+  discount_DESC
+  package_ASC
+  package_DESC
+  weight_ASC
+  weight_DESC
+  shortDescription_ASC
+  shortDescription_DESC
+  longDescription_ASC
+  longDescription_DESC
+  sku_ASC
+  sku_DESC
+  upc_ASC
+  upc_DESC
+  cost_ASC
+  cost_DESC
+  printInLabel_ASC
+  printInLabel_DESC
+  printInInvoice_ASC
+  printInInvoice_DESC
+  printInDN_ASC
+  printInDN_DESC
+  wholeSalePrice1_ASC
+  wholeSalePrice1_DESC
+  wholeSalePrice2_ASC
+  wholeSalePrice2_DESC
+  wholeSalePrice3_ASC
+  wholeSalePrice3_DESC
+  wholeSalePrice4_ASC
+  wholeSalePrice4_DESC
+  wholeSalePrice5_ASC
+  wholeSalePrice5_DESC
+  retailPrice1_ASC
+  retailPrice1_DESC
+  retailPrice2_ASC
+  retailPrice2_DESC
+  retailPrice3_ASC
+  retailPrice3_DESC
+  retailPrice4_ASC
+  retailPrice4_DESC
+  retailPrice5_ASC
+  retailPrice5_DESC
+  minOrderQuantity_ASC
+  minOrderQuantity_DESC
+  minStockLevel_ASC
+  minStockLevel_DESC
+  onlineDate_ASC
+  onlineDate_DESC
+  offlineDate_ASC
+  offlineDate_DESC
+}
+
+type ProductPreviousValues {
+  id: ID!
+  code: String!
+  brandEn: String!
+  brandChi: String!
+  nameEn: String!
+  nameChi: String!
+  discount: String
+  package: Int!
+  weight: String!
+  shortDescription: String
+  longDescription: String
+  sku: String
+  upc: String!
+  cost: Float!
+  printInLabel: Boolean
+  printInInvoice: Boolean
+  printInDN: Boolean
+  wholeSalePrice1: Float!
+  wholeSalePrice2: Float!
+  wholeSalePrice3: Float!
+  wholeSalePrice4: Float!
+  wholeSalePrice5: Float!
+  retailPrice1: Float!
+  retailPrice2: Float!
+  retailPrice3: Float!
+  retailPrice4: Float!
+  retailPrice5: Float!
+  minOrderQuantity: Float!
+  minStockLevel: Float!
+  onlineDate: DateTime
+  offlineDate: DateTime
+}
+
+input ProductScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  brandEn: String
+  brandEn_not: String
+  brandEn_in: [String!]
+  brandEn_not_in: [String!]
+  brandEn_lt: String
+  brandEn_lte: String
+  brandEn_gt: String
+  brandEn_gte: String
+  brandEn_contains: String
+  brandEn_not_contains: String
+  brandEn_starts_with: String
+  brandEn_not_starts_with: String
+  brandEn_ends_with: String
+  brandEn_not_ends_with: String
+  brandChi: String
+  brandChi_not: String
+  brandChi_in: [String!]
+  brandChi_not_in: [String!]
+  brandChi_lt: String
+  brandChi_lte: String
+  brandChi_gt: String
+  brandChi_gte: String
+  brandChi_contains: String
+  brandChi_not_contains: String
+  brandChi_starts_with: String
+  brandChi_not_starts_with: String
+  brandChi_ends_with: String
+  brandChi_not_ends_with: String
+  nameEn: String
+  nameEn_not: String
+  nameEn_in: [String!]
+  nameEn_not_in: [String!]
+  nameEn_lt: String
+  nameEn_lte: String
+  nameEn_gt: String
+  nameEn_gte: String
+  nameEn_contains: String
+  nameEn_not_contains: String
+  nameEn_starts_with: String
+  nameEn_not_starts_with: String
+  nameEn_ends_with: String
+  nameEn_not_ends_with: String
+  nameChi: String
+  nameChi_not: String
+  nameChi_in: [String!]
+  nameChi_not_in: [String!]
+  nameChi_lt: String
+  nameChi_lte: String
+  nameChi_gt: String
+  nameChi_gte: String
+  nameChi_contains: String
+  nameChi_not_contains: String
+  nameChi_starts_with: String
+  nameChi_not_starts_with: String
+  nameChi_ends_with: String
+  nameChi_not_ends_with: String
+  discount: String
+  discount_not: String
+  discount_in: [String!]
+  discount_not_in: [String!]
+  discount_lt: String
+  discount_lte: String
+  discount_gt: String
+  discount_gte: String
+  discount_contains: String
+  discount_not_contains: String
+  discount_starts_with: String
+  discount_not_starts_with: String
+  discount_ends_with: String
+  discount_not_ends_with: String
+  package: Int
+  package_not: Int
+  package_in: [Int!]
+  package_not_in: [Int!]
+  package_lt: Int
+  package_lte: Int
+  package_gt: Int
+  package_gte: Int
+  weight: String
+  weight_not: String
+  weight_in: [String!]
+  weight_not_in: [String!]
+  weight_lt: String
+  weight_lte: String
+  weight_gt: String
+  weight_gte: String
+  weight_contains: String
+  weight_not_contains: String
+  weight_starts_with: String
+  weight_not_starts_with: String
+  weight_ends_with: String
+  weight_not_ends_with: String
+  shortDescription: String
+  shortDescription_not: String
+  shortDescription_in: [String!]
+  shortDescription_not_in: [String!]
+  shortDescription_lt: String
+  shortDescription_lte: String
+  shortDescription_gt: String
+  shortDescription_gte: String
+  shortDescription_contains: String
+  shortDescription_not_contains: String
+  shortDescription_starts_with: String
+  shortDescription_not_starts_with: String
+  shortDescription_ends_with: String
+  shortDescription_not_ends_with: String
+  longDescription: String
+  longDescription_not: String
+  longDescription_in: [String!]
+  longDescription_not_in: [String!]
+  longDescription_lt: String
+  longDescription_lte: String
+  longDescription_gt: String
+  longDescription_gte: String
+  longDescription_contains: String
+  longDescription_not_contains: String
+  longDescription_starts_with: String
+  longDescription_not_starts_with: String
+  longDescription_ends_with: String
+  longDescription_not_ends_with: String
+  sku: String
+  sku_not: String
+  sku_in: [String!]
+  sku_not_in: [String!]
+  sku_lt: String
+  sku_lte: String
+  sku_gt: String
+  sku_gte: String
+  sku_contains: String
+  sku_not_contains: String
+  sku_starts_with: String
+  sku_not_starts_with: String
+  sku_ends_with: String
+  sku_not_ends_with: String
+  upc: String
+  upc_not: String
+  upc_in: [String!]
+  upc_not_in: [String!]
+  upc_lt: String
+  upc_lte: String
+  upc_gt: String
+  upc_gte: String
+  upc_contains: String
+  upc_not_contains: String
+  upc_starts_with: String
+  upc_not_starts_with: String
+  upc_ends_with: String
+  upc_not_ends_with: String
+  cost: Float
+  cost_not: Float
+  cost_in: [Float!]
+  cost_not_in: [Float!]
+  cost_lt: Float
+  cost_lte: Float
+  cost_gt: Float
+  cost_gte: Float
+  printInLabel: Boolean
+  printInLabel_not: Boolean
+  printInInvoice: Boolean
+  printInInvoice_not: Boolean
+  printInDN: Boolean
+  printInDN_not: Boolean
+  wholeSalePrice1: Float
+  wholeSalePrice1_not: Float
+  wholeSalePrice1_in: [Float!]
+  wholeSalePrice1_not_in: [Float!]
+  wholeSalePrice1_lt: Float
+  wholeSalePrice1_lte: Float
+  wholeSalePrice1_gt: Float
+  wholeSalePrice1_gte: Float
+  wholeSalePrice2: Float
+  wholeSalePrice2_not: Float
+  wholeSalePrice2_in: [Float!]
+  wholeSalePrice2_not_in: [Float!]
+  wholeSalePrice2_lt: Float
+  wholeSalePrice2_lte: Float
+  wholeSalePrice2_gt: Float
+  wholeSalePrice2_gte: Float
+  wholeSalePrice3: Float
+  wholeSalePrice3_not: Float
+  wholeSalePrice3_in: [Float!]
+  wholeSalePrice3_not_in: [Float!]
+  wholeSalePrice3_lt: Float
+  wholeSalePrice3_lte: Float
+  wholeSalePrice3_gt: Float
+  wholeSalePrice3_gte: Float
+  wholeSalePrice4: Float
+  wholeSalePrice4_not: Float
+  wholeSalePrice4_in: [Float!]
+  wholeSalePrice4_not_in: [Float!]
+  wholeSalePrice4_lt: Float
+  wholeSalePrice4_lte: Float
+  wholeSalePrice4_gt: Float
+  wholeSalePrice4_gte: Float
+  wholeSalePrice5: Float
+  wholeSalePrice5_not: Float
+  wholeSalePrice5_in: [Float!]
+  wholeSalePrice5_not_in: [Float!]
+  wholeSalePrice5_lt: Float
+  wholeSalePrice5_lte: Float
+  wholeSalePrice5_gt: Float
+  wholeSalePrice5_gte: Float
+  retailPrice1: Float
+  retailPrice1_not: Float
+  retailPrice1_in: [Float!]
+  retailPrice1_not_in: [Float!]
+  retailPrice1_lt: Float
+  retailPrice1_lte: Float
+  retailPrice1_gt: Float
+  retailPrice1_gte: Float
+  retailPrice2: Float
+  retailPrice2_not: Float
+  retailPrice2_in: [Float!]
+  retailPrice2_not_in: [Float!]
+  retailPrice2_lt: Float
+  retailPrice2_lte: Float
+  retailPrice2_gt: Float
+  retailPrice2_gte: Float
+  retailPrice3: Float
+  retailPrice3_not: Float
+  retailPrice3_in: [Float!]
+  retailPrice3_not_in: [Float!]
+  retailPrice3_lt: Float
+  retailPrice3_lte: Float
+  retailPrice3_gt: Float
+  retailPrice3_gte: Float
+  retailPrice4: Float
+  retailPrice4_not: Float
+  retailPrice4_in: [Float!]
+  retailPrice4_not_in: [Float!]
+  retailPrice4_lt: Float
+  retailPrice4_lte: Float
+  retailPrice4_gt: Float
+  retailPrice4_gte: Float
+  retailPrice5: Float
+  retailPrice5_not: Float
+  retailPrice5_in: [Float!]
+  retailPrice5_not_in: [Float!]
+  retailPrice5_lt: Float
+  retailPrice5_lte: Float
+  retailPrice5_gt: Float
+  retailPrice5_gte: Float
+  minOrderQuantity: Float
+  minOrderQuantity_not: Float
+  minOrderQuantity_in: [Float!]
+  minOrderQuantity_not_in: [Float!]
+  minOrderQuantity_lt: Float
+  minOrderQuantity_lte: Float
+  minOrderQuantity_gt: Float
+  minOrderQuantity_gte: Float
+  minStockLevel: Float
+  minStockLevel_not: Float
+  minStockLevel_in: [Float!]
+  minStockLevel_not_in: [Float!]
+  minStockLevel_lt: Float
+  minStockLevel_lte: Float
+  minStockLevel_gt: Float
+  minStockLevel_gte: Float
+  onlineDate: DateTime
+  onlineDate_not: DateTime
+  onlineDate_in: [DateTime!]
+  onlineDate_not_in: [DateTime!]
+  onlineDate_lt: DateTime
+  onlineDate_lte: DateTime
+  onlineDate_gt: DateTime
+  onlineDate_gte: DateTime
+  offlineDate: DateTime
+  offlineDate_not: DateTime
+  offlineDate_in: [DateTime!]
+  offlineDate_not_in: [DateTime!]
+  offlineDate_lt: DateTime
+  offlineDate_lte: DateTime
+  offlineDate_gt: DateTime
+  offlineDate_gte: DateTime
+  AND: [ProductScalarWhereInput!]
+  OR: [ProductScalarWhereInput!]
+  NOT: [ProductScalarWhereInput!]
+}
+
+type ProductSubscriptionPayload {
+  mutation: MutationType!
+  node: Product
+  updatedFields: [String!]
+  previousValues: ProductPreviousValues
+}
+
+input ProductSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProductWhereInput
+  AND: [ProductSubscriptionWhereInput!]
+  OR: [ProductSubscriptionWhereInput!]
+  NOT: [ProductSubscriptionWhereInput!]
+}
+
+input ProductUpdateInput {
+  code: String
+  brandEn: String
+  brandChi: String
+  nameEn: String
+  nameChi: String
+  discount: String
+  package: Int
+  weight: String
+  shortDescription: String
+  longDescription: String
+  images: ProductImageUpdateManyInput
+  sku: String
+  upc: String
+  cost: Float
+  printInLabel: Boolean
+  printInInvoice: Boolean
+  printInDN: Boolean
+  wholeSalePrice1: Float
+  wholeSalePrice2: Float
+  wholeSalePrice3: Float
+  wholeSalePrice4: Float
+  wholeSalePrice5: Float
+  retailPrice1: Float
+  retailPrice2: Float
+  retailPrice3: Float
+  retailPrice4: Float
+  retailPrice5: Float
+  minOrderQuantity: Float
+  minStockLevel: Float
+  onlineDate: DateTime
+  offlineDate: DateTime
+  categories: ProductCategoryUpdateManyWithoutProductsInput
+}
+
+input ProductUpdateManyDataInput {
+  code: String
+  brandEn: String
+  brandChi: String
+  nameEn: String
+  nameChi: String
+  discount: String
+  package: Int
+  weight: String
+  shortDescription: String
+  longDescription: String
+  sku: String
+  upc: String
+  cost: Float
+  printInLabel: Boolean
+  printInInvoice: Boolean
+  printInDN: Boolean
+  wholeSalePrice1: Float
+  wholeSalePrice2: Float
+  wholeSalePrice3: Float
+  wholeSalePrice4: Float
+  wholeSalePrice5: Float
+  retailPrice1: Float
+  retailPrice2: Float
+  retailPrice3: Float
+  retailPrice4: Float
+  retailPrice5: Float
+  minOrderQuantity: Float
+  minStockLevel: Float
+  onlineDate: DateTime
+  offlineDate: DateTime
+}
+
+input ProductUpdateManyMutationInput {
+  code: String
+  brandEn: String
+  brandChi: String
+  nameEn: String
+  nameChi: String
+  discount: String
+  package: Int
+  weight: String
+  shortDescription: String
+  longDescription: String
+  sku: String
+  upc: String
+  cost: Float
+  printInLabel: Boolean
+  printInInvoice: Boolean
+  printInDN: Boolean
+  wholeSalePrice1: Float
+  wholeSalePrice2: Float
+  wholeSalePrice3: Float
+  wholeSalePrice4: Float
+  wholeSalePrice5: Float
+  retailPrice1: Float
+  retailPrice2: Float
+  retailPrice3: Float
+  retailPrice4: Float
+  retailPrice5: Float
+  minOrderQuantity: Float
+  minStockLevel: Float
+  onlineDate: DateTime
+  offlineDate: DateTime
+}
+
+input ProductUpdateManyWithoutCategoriesInput {
+  create: [ProductCreateWithoutCategoriesInput!]
+  delete: [ProductWhereUniqueInput!]
+  connect: [ProductWhereUniqueInput!]
+  set: [ProductWhereUniqueInput!]
+  disconnect: [ProductWhereUniqueInput!]
+  update: [ProductUpdateWithWhereUniqueWithoutCategoriesInput!]
+  upsert: [ProductUpsertWithWhereUniqueWithoutCategoriesInput!]
+  deleteMany: [ProductScalarWhereInput!]
+  updateMany: [ProductUpdateManyWithWhereNestedInput!]
+}
+
+input ProductUpdateManyWithWhereNestedInput {
+  where: ProductScalarWhereInput!
+  data: ProductUpdateManyDataInput!
+}
+
+input ProductUpdateWithoutCategoriesDataInput {
+  code: String
+  brandEn: String
+  brandChi: String
+  nameEn: String
+  nameChi: String
+  discount: String
+  package: Int
+  weight: String
+  shortDescription: String
+  longDescription: String
+  images: ProductImageUpdateManyInput
+  sku: String
+  upc: String
+  cost: Float
+  printInLabel: Boolean
+  printInInvoice: Boolean
+  printInDN: Boolean
+  wholeSalePrice1: Float
+  wholeSalePrice2: Float
+  wholeSalePrice3: Float
+  wholeSalePrice4: Float
+  wholeSalePrice5: Float
+  retailPrice1: Float
+  retailPrice2: Float
+  retailPrice3: Float
+  retailPrice4: Float
+  retailPrice5: Float
+  minOrderQuantity: Float
+  minStockLevel: Float
+  onlineDate: DateTime
+  offlineDate: DateTime
+}
+
+input ProductUpdateWithWhereUniqueWithoutCategoriesInput {
+  where: ProductWhereUniqueInput!
+  data: ProductUpdateWithoutCategoriesDataInput!
+}
+
+input ProductUpsertWithWhereUniqueWithoutCategoriesInput {
+  where: ProductWhereUniqueInput!
+  update: ProductUpdateWithoutCategoriesDataInput!
+  create: ProductCreateWithoutCategoriesInput!
+}
+
+input ProductWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  brandEn: String
+  brandEn_not: String
+  brandEn_in: [String!]
+  brandEn_not_in: [String!]
+  brandEn_lt: String
+  brandEn_lte: String
+  brandEn_gt: String
+  brandEn_gte: String
+  brandEn_contains: String
+  brandEn_not_contains: String
+  brandEn_starts_with: String
+  brandEn_not_starts_with: String
+  brandEn_ends_with: String
+  brandEn_not_ends_with: String
+  brandChi: String
+  brandChi_not: String
+  brandChi_in: [String!]
+  brandChi_not_in: [String!]
+  brandChi_lt: String
+  brandChi_lte: String
+  brandChi_gt: String
+  brandChi_gte: String
+  brandChi_contains: String
+  brandChi_not_contains: String
+  brandChi_starts_with: String
+  brandChi_not_starts_with: String
+  brandChi_ends_with: String
+  brandChi_not_ends_with: String
+  nameEn: String
+  nameEn_not: String
+  nameEn_in: [String!]
+  nameEn_not_in: [String!]
+  nameEn_lt: String
+  nameEn_lte: String
+  nameEn_gt: String
+  nameEn_gte: String
+  nameEn_contains: String
+  nameEn_not_contains: String
+  nameEn_starts_with: String
+  nameEn_not_starts_with: String
+  nameEn_ends_with: String
+  nameEn_not_ends_with: String
+  nameChi: String
+  nameChi_not: String
+  nameChi_in: [String!]
+  nameChi_not_in: [String!]
+  nameChi_lt: String
+  nameChi_lte: String
+  nameChi_gt: String
+  nameChi_gte: String
+  nameChi_contains: String
+  nameChi_not_contains: String
+  nameChi_starts_with: String
+  nameChi_not_starts_with: String
+  nameChi_ends_with: String
+  nameChi_not_ends_with: String
+  discount: String
+  discount_not: String
+  discount_in: [String!]
+  discount_not_in: [String!]
+  discount_lt: String
+  discount_lte: String
+  discount_gt: String
+  discount_gte: String
+  discount_contains: String
+  discount_not_contains: String
+  discount_starts_with: String
+  discount_not_starts_with: String
+  discount_ends_with: String
+  discount_not_ends_with: String
+  package: Int
+  package_not: Int
+  package_in: [Int!]
+  package_not_in: [Int!]
+  package_lt: Int
+  package_lte: Int
+  package_gt: Int
+  package_gte: Int
+  weight: String
+  weight_not: String
+  weight_in: [String!]
+  weight_not_in: [String!]
+  weight_lt: String
+  weight_lte: String
+  weight_gt: String
+  weight_gte: String
+  weight_contains: String
+  weight_not_contains: String
+  weight_starts_with: String
+  weight_not_starts_with: String
+  weight_ends_with: String
+  weight_not_ends_with: String
+  shortDescription: String
+  shortDescription_not: String
+  shortDescription_in: [String!]
+  shortDescription_not_in: [String!]
+  shortDescription_lt: String
+  shortDescription_lte: String
+  shortDescription_gt: String
+  shortDescription_gte: String
+  shortDescription_contains: String
+  shortDescription_not_contains: String
+  shortDescription_starts_with: String
+  shortDescription_not_starts_with: String
+  shortDescription_ends_with: String
+  shortDescription_not_ends_with: String
+  longDescription: String
+  longDescription_not: String
+  longDescription_in: [String!]
+  longDescription_not_in: [String!]
+  longDescription_lt: String
+  longDescription_lte: String
+  longDescription_gt: String
+  longDescription_gte: String
+  longDescription_contains: String
+  longDescription_not_contains: String
+  longDescription_starts_with: String
+  longDescription_not_starts_with: String
+  longDescription_ends_with: String
+  longDescription_not_ends_with: String
+  images_every: ProductImageWhereInput
+  images_some: ProductImageWhereInput
+  images_none: ProductImageWhereInput
+  sku: String
+  sku_not: String
+  sku_in: [String!]
+  sku_not_in: [String!]
+  sku_lt: String
+  sku_lte: String
+  sku_gt: String
+  sku_gte: String
+  sku_contains: String
+  sku_not_contains: String
+  sku_starts_with: String
+  sku_not_starts_with: String
+  sku_ends_with: String
+  sku_not_ends_with: String
+  upc: String
+  upc_not: String
+  upc_in: [String!]
+  upc_not_in: [String!]
+  upc_lt: String
+  upc_lte: String
+  upc_gt: String
+  upc_gte: String
+  upc_contains: String
+  upc_not_contains: String
+  upc_starts_with: String
+  upc_not_starts_with: String
+  upc_ends_with: String
+  upc_not_ends_with: String
+  cost: Float
+  cost_not: Float
+  cost_in: [Float!]
+  cost_not_in: [Float!]
+  cost_lt: Float
+  cost_lte: Float
+  cost_gt: Float
+  cost_gte: Float
+  printInLabel: Boolean
+  printInLabel_not: Boolean
+  printInInvoice: Boolean
+  printInInvoice_not: Boolean
+  printInDN: Boolean
+  printInDN_not: Boolean
+  wholeSalePrice1: Float
+  wholeSalePrice1_not: Float
+  wholeSalePrice1_in: [Float!]
+  wholeSalePrice1_not_in: [Float!]
+  wholeSalePrice1_lt: Float
+  wholeSalePrice1_lte: Float
+  wholeSalePrice1_gt: Float
+  wholeSalePrice1_gte: Float
+  wholeSalePrice2: Float
+  wholeSalePrice2_not: Float
+  wholeSalePrice2_in: [Float!]
+  wholeSalePrice2_not_in: [Float!]
+  wholeSalePrice2_lt: Float
+  wholeSalePrice2_lte: Float
+  wholeSalePrice2_gt: Float
+  wholeSalePrice2_gte: Float
+  wholeSalePrice3: Float
+  wholeSalePrice3_not: Float
+  wholeSalePrice3_in: [Float!]
+  wholeSalePrice3_not_in: [Float!]
+  wholeSalePrice3_lt: Float
+  wholeSalePrice3_lte: Float
+  wholeSalePrice3_gt: Float
+  wholeSalePrice3_gte: Float
+  wholeSalePrice4: Float
+  wholeSalePrice4_not: Float
+  wholeSalePrice4_in: [Float!]
+  wholeSalePrice4_not_in: [Float!]
+  wholeSalePrice4_lt: Float
+  wholeSalePrice4_lte: Float
+  wholeSalePrice4_gt: Float
+  wholeSalePrice4_gte: Float
+  wholeSalePrice5: Float
+  wholeSalePrice5_not: Float
+  wholeSalePrice5_in: [Float!]
+  wholeSalePrice5_not_in: [Float!]
+  wholeSalePrice5_lt: Float
+  wholeSalePrice5_lte: Float
+  wholeSalePrice5_gt: Float
+  wholeSalePrice5_gte: Float
+  retailPrice1: Float
+  retailPrice1_not: Float
+  retailPrice1_in: [Float!]
+  retailPrice1_not_in: [Float!]
+  retailPrice1_lt: Float
+  retailPrice1_lte: Float
+  retailPrice1_gt: Float
+  retailPrice1_gte: Float
+  retailPrice2: Float
+  retailPrice2_not: Float
+  retailPrice2_in: [Float!]
+  retailPrice2_not_in: [Float!]
+  retailPrice2_lt: Float
+  retailPrice2_lte: Float
+  retailPrice2_gt: Float
+  retailPrice2_gte: Float
+  retailPrice3: Float
+  retailPrice3_not: Float
+  retailPrice3_in: [Float!]
+  retailPrice3_not_in: [Float!]
+  retailPrice3_lt: Float
+  retailPrice3_lte: Float
+  retailPrice3_gt: Float
+  retailPrice3_gte: Float
+  retailPrice4: Float
+  retailPrice4_not: Float
+  retailPrice4_in: [Float!]
+  retailPrice4_not_in: [Float!]
+  retailPrice4_lt: Float
+  retailPrice4_lte: Float
+  retailPrice4_gt: Float
+  retailPrice4_gte: Float
+  retailPrice5: Float
+  retailPrice5_not: Float
+  retailPrice5_in: [Float!]
+  retailPrice5_not_in: [Float!]
+  retailPrice5_lt: Float
+  retailPrice5_lte: Float
+  retailPrice5_gt: Float
+  retailPrice5_gte: Float
+  minOrderQuantity: Float
+  minOrderQuantity_not: Float
+  minOrderQuantity_in: [Float!]
+  minOrderQuantity_not_in: [Float!]
+  minOrderQuantity_lt: Float
+  minOrderQuantity_lte: Float
+  minOrderQuantity_gt: Float
+  minOrderQuantity_gte: Float
+  minStockLevel: Float
+  minStockLevel_not: Float
+  minStockLevel_in: [Float!]
+  minStockLevel_not_in: [Float!]
+  minStockLevel_lt: Float
+  minStockLevel_lte: Float
+  minStockLevel_gt: Float
+  minStockLevel_gte: Float
+  onlineDate: DateTime
+  onlineDate_not: DateTime
+  onlineDate_in: [DateTime!]
+  onlineDate_not_in: [DateTime!]
+  onlineDate_lt: DateTime
+  onlineDate_lte: DateTime
+  onlineDate_gt: DateTime
+  onlineDate_gte: DateTime
+  offlineDate: DateTime
+  offlineDate_not: DateTime
+  offlineDate_in: [DateTime!]
+  offlineDate_not_in: [DateTime!]
+  offlineDate_lt: DateTime
+  offlineDate_lte: DateTime
+  offlineDate_gt: DateTime
+  offlineDate_gte: DateTime
+  categories_every: ProductCategoryWhereInput
+  categories_some: ProductCategoryWhereInput
+  categories_none: ProductCategoryWhereInput
+  AND: [ProductWhereInput!]
+  OR: [ProductWhereInput!]
+  NOT: [ProductWhereInput!]
+}
+
+input ProductWhereUniqueInput {
+  id: ID
+  code: String
+}
+
+type Query {
+  product(where: ProductWhereUniqueInput!): Product
+  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
+  productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
+  productCategory(where: ProductCategoryWhereUniqueInput!): ProductCategory
+  productCategories(where: ProductCategoryWhereInput, orderBy: ProductCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductCategory]!
+  productCategoriesConnection(where: ProductCategoryWhereInput, orderBy: ProductCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductCategoryConnection!
+  productImages(where: ProductImageWhereInput, orderBy: ProductImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductImage]!
+  productImagesConnection(where: ProductImageWhereInput, orderBy: ProductImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductImageConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
+  productCategory(where: ProductCategorySubscriptionWhereInput): ProductCategorySubscriptionPayload
+  productImage(where: ProductImageSubscriptionWhereInput): ProductImageSubscriptionPayload
+}

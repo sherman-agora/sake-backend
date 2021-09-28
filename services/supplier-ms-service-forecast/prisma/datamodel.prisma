@@ -1,0 +1,6 @@
+type ForecastProduct {
+  id: ID! @id
+  productId: ID! @unique
+  monthlySalesOnAverage: Float!
+  numberOfMonth: Int!
+}

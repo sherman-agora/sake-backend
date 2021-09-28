@@ -1,0 +1,754 @@
+type AggregatePurchaseOrder {
+  count: Int!
+}
+
+type AggregatePurchaseOrderItem {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar DateTime
+
+scalar Long
+
+type Mutation {
+  createPurchaseOrder(data: PurchaseOrderCreateInput!): PurchaseOrder!
+  updatePurchaseOrder(data: PurchaseOrderUpdateInput!, where: PurchaseOrderWhereUniqueInput!): PurchaseOrder
+  updateManyPurchaseOrders(data: PurchaseOrderUpdateManyMutationInput!, where: PurchaseOrderWhereInput): BatchPayload!
+  upsertPurchaseOrder(where: PurchaseOrderWhereUniqueInput!, create: PurchaseOrderCreateInput!, update: PurchaseOrderUpdateInput!): PurchaseOrder!
+  deletePurchaseOrder(where: PurchaseOrderWhereUniqueInput!): PurchaseOrder
+  deleteManyPurchaseOrders(where: PurchaseOrderWhereInput): BatchPayload!
+  createPurchaseOrderItem(data: PurchaseOrderItemCreateInput!): PurchaseOrderItem!
+  updatePurchaseOrderItem(data: PurchaseOrderItemUpdateInput!, where: PurchaseOrderItemWhereUniqueInput!): PurchaseOrderItem
+  updateManyPurchaseOrderItems(data: PurchaseOrderItemUpdateManyMutationInput!, where: PurchaseOrderItemWhereInput): BatchPayload!
+  upsertPurchaseOrderItem(where: PurchaseOrderItemWhereUniqueInput!, create: PurchaseOrderItemCreateInput!, update: PurchaseOrderItemUpdateInput!): PurchaseOrderItem!
+  deletePurchaseOrderItem(where: PurchaseOrderItemWhereUniqueInput!): PurchaseOrderItem
+  deleteManyPurchaseOrderItems(where: PurchaseOrderItemWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type PurchaseOrder {
+  id: ID!
+  code: String!
+  supplierId: ID!
+  userId: ID
+  expectedDeliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  state: PurchaseOrderStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  products(where: PurchaseOrderItemWhereInput, orderBy: PurchaseOrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PurchaseOrderItem!]
+}
+
+type PurchaseOrderConnection {
+  pageInfo: PageInfo!
+  edges: [PurchaseOrderEdge]!
+  aggregate: AggregatePurchaseOrder!
+}
+
+input PurchaseOrderCreateInput {
+  id: ID
+  code: String!
+  supplierId: ID!
+  userId: ID
+  expectedDeliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  state: PurchaseOrderStatus!
+  products: PurchaseOrderItemCreateManyWithoutPurchaseOrderInput
+}
+
+input PurchaseOrderCreateOneWithoutProductsInput {
+  create: PurchaseOrderCreateWithoutProductsInput
+  connect: PurchaseOrderWhereUniqueInput
+}
+
+input PurchaseOrderCreateWithoutProductsInput {
+  id: ID
+  code: String!
+  supplierId: ID!
+  userId: ID
+  expectedDeliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  state: PurchaseOrderStatus!
+}
+
+type PurchaseOrderEdge {
+  node: PurchaseOrder!
+  cursor: String!
+}
+
+type PurchaseOrderItem {
+  id: ID!
+  purchaseOrder: PurchaseOrder!
+  productId: ID!
+  remarks: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  expiryDate: DateTime
+  tax: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PurchaseOrderItemConnection {
+  pageInfo: PageInfo!
+  edges: [PurchaseOrderItemEdge]!
+  aggregate: AggregatePurchaseOrderItem!
+}
+
+input PurchaseOrderItemCreateInput {
+  id: ID
+  purchaseOrder: PurchaseOrderCreateOneWithoutProductsInput!
+  productId: ID!
+  remarks: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  expiryDate: DateTime
+  tax: Float
+}
+
+input PurchaseOrderItemCreateManyWithoutPurchaseOrderInput {
+  create: [PurchaseOrderItemCreateWithoutPurchaseOrderInput!]
+  connect: [PurchaseOrderItemWhereUniqueInput!]
+}
+
+input PurchaseOrderItemCreateWithoutPurchaseOrderInput {
+  id: ID
+  productId: ID!
+  remarks: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  expiryDate: DateTime
+  tax: Float
+}
+
+type PurchaseOrderItemEdge {
+  node: PurchaseOrderItem!
+  cursor: String!
+}
+
+enum PurchaseOrderItemOrderByInput {
+  id_ASC
+  id_DESC
+  productId_ASC
+  productId_DESC
+  remarks_ASC
+  remarks_DESC
+  quantity_ASC
+  quantity_DESC
+  price_ASC
+  price_DESC
+  totalPrice_ASC
+  totalPrice_DESC
+  deliveryDate_ASC
+  deliveryDate_DESC
+  expiryDate_ASC
+  expiryDate_DESC
+  tax_ASC
+  tax_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type PurchaseOrderItemPreviousValues {
+  id: ID!
+  productId: ID!
+  remarks: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  expiryDate: DateTime
+  tax: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input PurchaseOrderItemScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  productId: ID
+  productId_not: ID
+  productId_in: [ID!]
+  productId_not_in: [ID!]
+  productId_lt: ID
+  productId_lte: ID
+  productId_gt: ID
+  productId_gte: ID
+  productId_contains: ID
+  productId_not_contains: ID
+  productId_starts_with: ID
+  productId_not_starts_with: ID
+  productId_ends_with: ID
+  productId_not_ends_with: ID
+  remarks: String
+  remarks_not: String
+  remarks_in: [String!]
+  remarks_not_in: [String!]
+  remarks_lt: String
+  remarks_lte: String
+  remarks_gt: String
+  remarks_gte: String
+  remarks_contains: String
+  remarks_not_contains: String
+  remarks_starts_with: String
+  remarks_not_starts_with: String
+  remarks_ends_with: String
+  remarks_not_ends_with: String
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
+  totalPrice: Float
+  totalPrice_not: Float
+  totalPrice_in: [Float!]
+  totalPrice_not_in: [Float!]
+  totalPrice_lt: Float
+  totalPrice_lte: Float
+  totalPrice_gt: Float
+  totalPrice_gte: Float
+  deliveryDate: DateTime
+  deliveryDate_not: DateTime
+  deliveryDate_in: [DateTime!]
+  deliveryDate_not_in: [DateTime!]
+  deliveryDate_lt: DateTime
+  deliveryDate_lte: DateTime
+  deliveryDate_gt: DateTime
+  deliveryDate_gte: DateTime
+  expiryDate: DateTime
+  expiryDate_not: DateTime
+  expiryDate_in: [DateTime!]
+  expiryDate_not_in: [DateTime!]
+  expiryDate_lt: DateTime
+  expiryDate_lte: DateTime
+  expiryDate_gt: DateTime
+  expiryDate_gte: DateTime
+  tax: Float
+  tax_not: Float
+  tax_in: [Float!]
+  tax_not_in: [Float!]
+  tax_lt: Float
+  tax_lte: Float
+  tax_gt: Float
+  tax_gte: Float
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [PurchaseOrderItemScalarWhereInput!]
+  OR: [PurchaseOrderItemScalarWhereInput!]
+  NOT: [PurchaseOrderItemScalarWhereInput!]
+}
+
+type PurchaseOrderItemSubscriptionPayload {
+  mutation: MutationType!
+  node: PurchaseOrderItem
+  updatedFields: [String!]
+  previousValues: PurchaseOrderItemPreviousValues
+}
+
+input PurchaseOrderItemSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PurchaseOrderItemWhereInput
+  AND: [PurchaseOrderItemSubscriptionWhereInput!]
+  OR: [PurchaseOrderItemSubscriptionWhereInput!]
+  NOT: [PurchaseOrderItemSubscriptionWhereInput!]
+}
+
+input PurchaseOrderItemUpdateInput {
+  purchaseOrder: PurchaseOrderUpdateOneRequiredWithoutProductsInput
+  productId: ID
+  remarks: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  expiryDate: DateTime
+  tax: Float
+}
+
+input PurchaseOrderItemUpdateManyDataInput {
+  productId: ID
+  remarks: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  expiryDate: DateTime
+  tax: Float
+}
+
+input PurchaseOrderItemUpdateManyMutationInput {
+  productId: ID
+  remarks: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  expiryDate: DateTime
+  tax: Float
+}
+
+input PurchaseOrderItemUpdateManyWithoutPurchaseOrderInput {
+  create: [PurchaseOrderItemCreateWithoutPurchaseOrderInput!]
+  delete: [PurchaseOrderItemWhereUniqueInput!]
+  connect: [PurchaseOrderItemWhereUniqueInput!]
+  set: [PurchaseOrderItemWhereUniqueInput!]
+  disconnect: [PurchaseOrderItemWhereUniqueInput!]
+  update: [PurchaseOrderItemUpdateWithWhereUniqueWithoutPurchaseOrderInput!]
+  upsert: [PurchaseOrderItemUpsertWithWhereUniqueWithoutPurchaseOrderInput!]
+  deleteMany: [PurchaseOrderItemScalarWhereInput!]
+  updateMany: [PurchaseOrderItemUpdateManyWithWhereNestedInput!]
+}
+
+input PurchaseOrderItemUpdateManyWithWhereNestedInput {
+  where: PurchaseOrderItemScalarWhereInput!
+  data: PurchaseOrderItemUpdateManyDataInput!
+}
+
+input PurchaseOrderItemUpdateWithoutPurchaseOrderDataInput {
+  productId: ID
+  remarks: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  expiryDate: DateTime
+  tax: Float
+}
+
+input PurchaseOrderItemUpdateWithWhereUniqueWithoutPurchaseOrderInput {
+  where: PurchaseOrderItemWhereUniqueInput!
+  data: PurchaseOrderItemUpdateWithoutPurchaseOrderDataInput!
+}
+
+input PurchaseOrderItemUpsertWithWhereUniqueWithoutPurchaseOrderInput {
+  where: PurchaseOrderItemWhereUniqueInput!
+  update: PurchaseOrderItemUpdateWithoutPurchaseOrderDataInput!
+  create: PurchaseOrderItemCreateWithoutPurchaseOrderInput!
+}
+
+input PurchaseOrderItemWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  purchaseOrder: PurchaseOrderWhereInput
+  productId: ID
+  productId_not: ID
+  productId_in: [ID!]
+  productId_not_in: [ID!]
+  productId_lt: ID
+  productId_lte: ID
+  productId_gt: ID
+  productId_gte: ID
+  productId_contains: ID
+  productId_not_contains: ID
+  productId_starts_with: ID
+  productId_not_starts_with: ID
+  productId_ends_with: ID
+  productId_not_ends_with: ID
+  remarks: String
+  remarks_not: String
+  remarks_in: [String!]
+  remarks_not_in: [String!]
+  remarks_lt: String
+  remarks_lte: String
+  remarks_gt: String
+  remarks_gte: String
+  remarks_contains: String
+  remarks_not_contains: String
+  remarks_starts_with: String
+  remarks_not_starts_with: String
+  remarks_ends_with: String
+  remarks_not_ends_with: String
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
+  totalPrice: Float
+  totalPrice_not: Float
+  totalPrice_in: [Float!]
+  totalPrice_not_in: [Float!]
+  totalPrice_lt: Float
+  totalPrice_lte: Float
+  totalPrice_gt: Float
+  totalPrice_gte: Float
+  deliveryDate: DateTime
+  deliveryDate_not: DateTime
+  deliveryDate_in: [DateTime!]
+  deliveryDate_not_in: [DateTime!]
+  deliveryDate_lt: DateTime
+  deliveryDate_lte: DateTime
+  deliveryDate_gt: DateTime
+  deliveryDate_gte: DateTime
+  expiryDate: DateTime
+  expiryDate_not: DateTime
+  expiryDate_in: [DateTime!]
+  expiryDate_not_in: [DateTime!]
+  expiryDate_lt: DateTime
+  expiryDate_lte: DateTime
+  expiryDate_gt: DateTime
+  expiryDate_gte: DateTime
+  tax: Float
+  tax_not: Float
+  tax_in: [Float!]
+  tax_not_in: [Float!]
+  tax_lt: Float
+  tax_lte: Float
+  tax_gt: Float
+  tax_gte: Float
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [PurchaseOrderItemWhereInput!]
+  OR: [PurchaseOrderItemWhereInput!]
+  NOT: [PurchaseOrderItemWhereInput!]
+}
+
+input PurchaseOrderItemWhereUniqueInput {
+  id: ID
+}
+
+enum PurchaseOrderOrderByInput {
+  id_ASC
+  id_DESC
+  code_ASC
+  code_DESC
+  supplierId_ASC
+  supplierId_DESC
+  userId_ASC
+  userId_DESC
+  expectedDeliveryAt_ASC
+  expectedDeliveryAt_DESC
+  unfinishedTax_ASC
+  unfinishedTax_DESC
+  totalPrice_ASC
+  totalPrice_DESC
+  state_ASC
+  state_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type PurchaseOrderPreviousValues {
+  id: ID!
+  code: String!
+  supplierId: ID!
+  userId: ID
+  expectedDeliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  state: PurchaseOrderStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum PurchaseOrderStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  SENT
+  ACKED
+  CONFIRMED
+  SHIPPED
+  ARRIVED
+  RECEIVED
+  DELETED
+}
+
+type PurchaseOrderSubscriptionPayload {
+  mutation: MutationType!
+  node: PurchaseOrder
+  updatedFields: [String!]
+  previousValues: PurchaseOrderPreviousValues
+}
+
+input PurchaseOrderSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PurchaseOrderWhereInput
+  AND: [PurchaseOrderSubscriptionWhereInput!]
+  OR: [PurchaseOrderSubscriptionWhereInput!]
+  NOT: [PurchaseOrderSubscriptionWhereInput!]
+}
+
+input PurchaseOrderUpdateInput {
+  code: String
+  supplierId: ID
+  userId: ID
+  expectedDeliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  state: PurchaseOrderStatus
+  products: PurchaseOrderItemUpdateManyWithoutPurchaseOrderInput
+}
+
+input PurchaseOrderUpdateManyMutationInput {
+  code: String
+  supplierId: ID
+  userId: ID
+  expectedDeliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  state: PurchaseOrderStatus
+}
+
+input PurchaseOrderUpdateOneRequiredWithoutProductsInput {
+  create: PurchaseOrderCreateWithoutProductsInput
+  update: PurchaseOrderUpdateWithoutProductsDataInput
+  upsert: PurchaseOrderUpsertWithoutProductsInput
+  connect: PurchaseOrderWhereUniqueInput
+}
+
+input PurchaseOrderUpdateWithoutProductsDataInput {
+  code: String
+  supplierId: ID
+  userId: ID
+  expectedDeliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  state: PurchaseOrderStatus
+}
+
+input PurchaseOrderUpsertWithoutProductsInput {
+  update: PurchaseOrderUpdateWithoutProductsDataInput!
+  create: PurchaseOrderCreateWithoutProductsInput!
+}
+
+input PurchaseOrderWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  supplierId: ID
+  supplierId_not: ID
+  supplierId_in: [ID!]
+  supplierId_not_in: [ID!]
+  supplierId_lt: ID
+  supplierId_lte: ID
+  supplierId_gt: ID
+  supplierId_gte: ID
+  supplierId_contains: ID
+  supplierId_not_contains: ID
+  supplierId_starts_with: ID
+  supplierId_not_starts_with: ID
+  supplierId_ends_with: ID
+  supplierId_not_ends_with: ID
+  userId: ID
+  userId_not: ID
+  userId_in: [ID!]
+  userId_not_in: [ID!]
+  userId_lt: ID
+  userId_lte: ID
+  userId_gt: ID
+  userId_gte: ID
+  userId_contains: ID
+  userId_not_contains: ID
+  userId_starts_with: ID
+  userId_not_starts_with: ID
+  userId_ends_with: ID
+  userId_not_ends_with: ID
+  expectedDeliveryAt: DateTime
+  expectedDeliveryAt_not: DateTime
+  expectedDeliveryAt_in: [DateTime!]
+  expectedDeliveryAt_not_in: [DateTime!]
+  expectedDeliveryAt_lt: DateTime
+  expectedDeliveryAt_lte: DateTime
+  expectedDeliveryAt_gt: DateTime
+  expectedDeliveryAt_gte: DateTime
+  unfinishedTax: Float
+  unfinishedTax_not: Float
+  unfinishedTax_in: [Float!]
+  unfinishedTax_not_in: [Float!]
+  unfinishedTax_lt: Float
+  unfinishedTax_lte: Float
+  unfinishedTax_gt: Float
+  unfinishedTax_gte: Float
+  totalPrice: Float
+  totalPrice_not: Float
+  totalPrice_in: [Float!]
+  totalPrice_not_in: [Float!]
+  totalPrice_lt: Float
+  totalPrice_lte: Float
+  totalPrice_gt: Float
+  totalPrice_gte: Float
+  state: PurchaseOrderStatus
+  state_not: PurchaseOrderStatus
+  state_in: [PurchaseOrderStatus!]
+  state_not_in: [PurchaseOrderStatus!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  products_every: PurchaseOrderItemWhereInput
+  products_some: PurchaseOrderItemWhereInput
+  products_none: PurchaseOrderItemWhereInput
+  AND: [PurchaseOrderWhereInput!]
+  OR: [PurchaseOrderWhereInput!]
+  NOT: [PurchaseOrderWhereInput!]
+}
+
+input PurchaseOrderWhereUniqueInput {
+  id: ID
+  code: String
+}
+
+type Query {
+  purchaseOrder(where: PurchaseOrderWhereUniqueInput!): PurchaseOrder
+  purchaseOrders(where: PurchaseOrderWhereInput, orderBy: PurchaseOrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PurchaseOrder]!
+  purchaseOrdersConnection(where: PurchaseOrderWhereInput, orderBy: PurchaseOrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PurchaseOrderConnection!
+  purchaseOrderItem(where: PurchaseOrderItemWhereUniqueInput!): PurchaseOrderItem
+  purchaseOrderItems(where: PurchaseOrderItemWhereInput, orderBy: PurchaseOrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PurchaseOrderItem]!
+  purchaseOrderItemsConnection(where: PurchaseOrderItemWhereInput, orderBy: PurchaseOrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PurchaseOrderItemConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  purchaseOrder(where: PurchaseOrderSubscriptionWhereInput): PurchaseOrderSubscriptionPayload
+  purchaseOrderItem(where: PurchaseOrderItemSubscriptionWhereInput): PurchaseOrderItemSubscriptionPayload
+}

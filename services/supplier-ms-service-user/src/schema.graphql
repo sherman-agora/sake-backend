@@ -1,0 +1,2 @@
+# import Query.user, Query.users, Query.usersConnection, Mutation.createUser, Mutation.updateUser, Mutation.deleteUser from 'prisma.graphql'
+# import Query.userGroup, Query.userGroups, Query.userGroupsConnection, Mutation.createUserGroup, Mutation.updateUserGroup, Mutation.deleteUserGroup from 'prisma.graphql'

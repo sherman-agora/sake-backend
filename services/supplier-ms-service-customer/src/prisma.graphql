@@ -1,0 +1,1776 @@
+type AggregateCustomer {
+  count: Int!
+}
+
+type AggregateCustomerCoupon {
+  count: Int!
+}
+
+type AggregateCustomerGroup {
+  count: Int!
+}
+
+type AggregateCustomerShop {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+type Customer {
+  id: ID!
+  code: String!
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  shops(where: CustomerShopWhereInput, orderBy: CustomerShopOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CustomerShop!]
+  group: CustomerGroup!
+  coupons(where: CustomerCouponWhereInput, orderBy: CustomerCouponOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CustomerCoupon!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CustomerConnection {
+  pageInfo: PageInfo!
+  edges: [CustomerEdge]!
+  aggregate: AggregateCustomer!
+}
+
+type CustomerCoupon {
+  id: ID!
+  type: CustomerCouponType!
+  quantity: Int!
+  code: String!
+  state: CustomerCouponState!
+  name: String!
+  discount: String!
+  customer: Customer!
+}
+
+type CustomerCouponConnection {
+  pageInfo: PageInfo!
+  edges: [CustomerCouponEdge]!
+  aggregate: AggregateCustomerCoupon!
+}
+
+input CustomerCouponCreateInput {
+  id: ID
+  type: CustomerCouponType!
+  quantity: Int
+  code: String!
+  state: CustomerCouponState!
+  name: String!
+  discount: String!
+  customer: CustomerCreateOneWithoutCouponsInput!
+}
+
+input CustomerCouponCreateManyWithoutCustomerInput {
+  create: [CustomerCouponCreateWithoutCustomerInput!]
+  connect: [CustomerCouponWhereUniqueInput!]
+}
+
+input CustomerCouponCreateWithoutCustomerInput {
+  id: ID
+  type: CustomerCouponType!
+  quantity: Int
+  code: String!
+  state: CustomerCouponState!
+  name: String!
+  discount: String!
+}
+
+type CustomerCouponEdge {
+  node: CustomerCoupon!
+  cursor: String!
+}
+
+enum CustomerCouponOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  quantity_ASC
+  quantity_DESC
+  code_ASC
+  code_DESC
+  state_ASC
+  state_DESC
+  name_ASC
+  name_DESC
+  discount_ASC
+  discount_DESC
+}
+
+type CustomerCouponPreviousValues {
+  id: ID!
+  type: CustomerCouponType!
+  quantity: Int!
+  code: String!
+  state: CustomerCouponState!
+  name: String!
+  discount: String!
+}
+
+input CustomerCouponScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: CustomerCouponType
+  type_not: CustomerCouponType
+  type_in: [CustomerCouponType!]
+  type_not_in: [CustomerCouponType!]
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  state: CustomerCouponState
+  state_not: CustomerCouponState
+  state_in: [CustomerCouponState!]
+  state_not_in: [CustomerCouponState!]
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  discount: String
+  discount_not: String
+  discount_in: [String!]
+  discount_not_in: [String!]
+  discount_lt: String
+  discount_lte: String
+  discount_gt: String
+  discount_gte: String
+  discount_contains: String
+  discount_not_contains: String
+  discount_starts_with: String
+  discount_not_starts_with: String
+  discount_ends_with: String
+  discount_not_ends_with: String
+  AND: [CustomerCouponScalarWhereInput!]
+  OR: [CustomerCouponScalarWhereInput!]
+  NOT: [CustomerCouponScalarWhereInput!]
+}
+
+enum CustomerCouponState {
+  PENDING
+  AVAILABLE
+  EMPTY
+  DELETED
+}
+
+type CustomerCouponSubscriptionPayload {
+  mutation: MutationType!
+  node: CustomerCoupon
+  updatedFields: [String!]
+  previousValues: CustomerCouponPreviousValues
+}
+
+input CustomerCouponSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CustomerCouponWhereInput
+  AND: [CustomerCouponSubscriptionWhereInput!]
+  OR: [CustomerCouponSubscriptionWhereInput!]
+  NOT: [CustomerCouponSubscriptionWhereInput!]
+}
+
+enum CustomerCouponType {
+  UNLIMITED
+  LIMITED
+}
+
+input CustomerCouponUpdateInput {
+  type: CustomerCouponType
+  quantity: Int
+  code: String
+  state: CustomerCouponState
+  name: String
+  discount: String
+  customer: CustomerUpdateOneRequiredWithoutCouponsInput
+}
+
+input CustomerCouponUpdateManyDataInput {
+  type: CustomerCouponType
+  quantity: Int
+  code: String
+  state: CustomerCouponState
+  name: String
+  discount: String
+}
+
+input CustomerCouponUpdateManyMutationInput {
+  type: CustomerCouponType
+  quantity: Int
+  code: String
+  state: CustomerCouponState
+  name: String
+  discount: String
+}
+
+input CustomerCouponUpdateManyWithoutCustomerInput {
+  create: [CustomerCouponCreateWithoutCustomerInput!]
+  delete: [CustomerCouponWhereUniqueInput!]
+  connect: [CustomerCouponWhereUniqueInput!]
+  set: [CustomerCouponWhereUniqueInput!]
+  disconnect: [CustomerCouponWhereUniqueInput!]
+  update: [CustomerCouponUpdateWithWhereUniqueWithoutCustomerInput!]
+  upsert: [CustomerCouponUpsertWithWhereUniqueWithoutCustomerInput!]
+  deleteMany: [CustomerCouponScalarWhereInput!]
+  updateMany: [CustomerCouponUpdateManyWithWhereNestedInput!]
+}
+
+input CustomerCouponUpdateManyWithWhereNestedInput {
+  where: CustomerCouponScalarWhereInput!
+  data: CustomerCouponUpdateManyDataInput!
+}
+
+input CustomerCouponUpdateWithoutCustomerDataInput {
+  type: CustomerCouponType
+  quantity: Int
+  code: String
+  state: CustomerCouponState
+  name: String
+  discount: String
+}
+
+input CustomerCouponUpdateWithWhereUniqueWithoutCustomerInput {
+  where: CustomerCouponWhereUniqueInput!
+  data: CustomerCouponUpdateWithoutCustomerDataInput!
+}
+
+input CustomerCouponUpsertWithWhereUniqueWithoutCustomerInput {
+  where: CustomerCouponWhereUniqueInput!
+  update: CustomerCouponUpdateWithoutCustomerDataInput!
+  create: CustomerCouponCreateWithoutCustomerInput!
+}
+
+input CustomerCouponWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: CustomerCouponType
+  type_not: CustomerCouponType
+  type_in: [CustomerCouponType!]
+  type_not_in: [CustomerCouponType!]
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  state: CustomerCouponState
+  state_not: CustomerCouponState
+  state_in: [CustomerCouponState!]
+  state_not_in: [CustomerCouponState!]
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  discount: String
+  discount_not: String
+  discount_in: [String!]
+  discount_not_in: [String!]
+  discount_lt: String
+  discount_lte: String
+  discount_gt: String
+  discount_gte: String
+  discount_contains: String
+  discount_not_contains: String
+  discount_starts_with: String
+  discount_not_starts_with: String
+  discount_ends_with: String
+  discount_not_ends_with: String
+  customer: CustomerWhereInput
+  AND: [CustomerCouponWhereInput!]
+  OR: [CustomerCouponWhereInput!]
+  NOT: [CustomerCouponWhereInput!]
+}
+
+input CustomerCouponWhereUniqueInput {
+  id: ID
+  code: String
+}
+
+input CustomerCreateInput {
+  id: ID
+  code: String!
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  shops: CustomerShopCreateManyWithoutCustomerInput
+  group: CustomerGroupCreateOneWithoutCustomersInput!
+  coupons: CustomerCouponCreateManyWithoutCustomerInput
+}
+
+input CustomerCreateManyWithoutGroupInput {
+  create: [CustomerCreateWithoutGroupInput!]
+  connect: [CustomerWhereUniqueInput!]
+}
+
+input CustomerCreateOneWithoutCouponsInput {
+  create: CustomerCreateWithoutCouponsInput
+  connect: CustomerWhereUniqueInput
+}
+
+input CustomerCreateOneWithoutShopsInput {
+  create: CustomerCreateWithoutShopsInput
+  connect: CustomerWhereUniqueInput
+}
+
+input CustomerCreateWithoutCouponsInput {
+  id: ID
+  code: String!
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  shops: CustomerShopCreateManyWithoutCustomerInput
+  group: CustomerGroupCreateOneWithoutCustomersInput!
+}
+
+input CustomerCreateWithoutGroupInput {
+  id: ID
+  code: String!
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  shops: CustomerShopCreateManyWithoutCustomerInput
+  coupons: CustomerCouponCreateManyWithoutCustomerInput
+}
+
+input CustomerCreateWithoutShopsInput {
+  id: ID
+  code: String!
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  group: CustomerGroupCreateOneWithoutCustomersInput!
+  coupons: CustomerCouponCreateManyWithoutCustomerInput
+}
+
+type CustomerEdge {
+  node: Customer!
+  cursor: String!
+}
+
+type CustomerGroup {
+  id: ID!
+  name: String!
+  customers(where: CustomerWhereInput, orderBy: CustomerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Customer!]
+}
+
+type CustomerGroupConnection {
+  pageInfo: PageInfo!
+  edges: [CustomerGroupEdge]!
+  aggregate: AggregateCustomerGroup!
+}
+
+input CustomerGroupCreateInput {
+  id: ID
+  name: String!
+  customers: CustomerCreateManyWithoutGroupInput
+}
+
+input CustomerGroupCreateOneWithoutCustomersInput {
+  create: CustomerGroupCreateWithoutCustomersInput
+  connect: CustomerGroupWhereUniqueInput
+}
+
+input CustomerGroupCreateWithoutCustomersInput {
+  id: ID
+  name: String!
+}
+
+type CustomerGroupEdge {
+  node: CustomerGroup!
+  cursor: String!
+}
+
+enum CustomerGroupOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type CustomerGroupPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type CustomerGroupSubscriptionPayload {
+  mutation: MutationType!
+  node: CustomerGroup
+  updatedFields: [String!]
+  previousValues: CustomerGroupPreviousValues
+}
+
+input CustomerGroupSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CustomerGroupWhereInput
+  AND: [CustomerGroupSubscriptionWhereInput!]
+  OR: [CustomerGroupSubscriptionWhereInput!]
+  NOT: [CustomerGroupSubscriptionWhereInput!]
+}
+
+input CustomerGroupUpdateInput {
+  name: String
+  customers: CustomerUpdateManyWithoutGroupInput
+}
+
+input CustomerGroupUpdateManyMutationInput {
+  name: String
+}
+
+input CustomerGroupUpdateOneRequiredWithoutCustomersInput {
+  create: CustomerGroupCreateWithoutCustomersInput
+  update: CustomerGroupUpdateWithoutCustomersDataInput
+  upsert: CustomerGroupUpsertWithoutCustomersInput
+  connect: CustomerGroupWhereUniqueInput
+}
+
+input CustomerGroupUpdateWithoutCustomersDataInput {
+  name: String
+}
+
+input CustomerGroupUpsertWithoutCustomersInput {
+  update: CustomerGroupUpdateWithoutCustomersDataInput!
+  create: CustomerGroupCreateWithoutCustomersInput!
+}
+
+input CustomerGroupWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  customers_every: CustomerWhereInput
+  customers_some: CustomerWhereInput
+  customers_none: CustomerWhereInput
+  AND: [CustomerGroupWhereInput!]
+  OR: [CustomerGroupWhereInput!]
+  NOT: [CustomerGroupWhereInput!]
+}
+
+input CustomerGroupWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+enum CustomerOrderByInput {
+  id_ASC
+  id_DESC
+  code_ASC
+  code_DESC
+  nameEn_ASC
+  nameEn_DESC
+  nameChi_ASC
+  nameChi_DESC
+  wholesalePlan_ASC
+  wholesalePlan_DESC
+  phone_ASC
+  phone_DESC
+  mobile_ASC
+  mobile_DESC
+  email_ASC
+  email_DESC
+  billingAddress_ASC
+  billingAddress_DESC
+  salesman_ASC
+  salesman_DESC
+  website_ASC
+  website_DESC
+  remark_ASC
+  remark_DESC
+  paymentMethod_ASC
+  paymentMethod_DESC
+  district_ASC
+  district_DESC
+  logs_ASC
+  logs_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CustomerPreviousValues {
+  id: ID!
+  code: String!
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CustomerScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  nameEn: String
+  nameEn_not: String
+  nameEn_in: [String!]
+  nameEn_not_in: [String!]
+  nameEn_lt: String
+  nameEn_lte: String
+  nameEn_gt: String
+  nameEn_gte: String
+  nameEn_contains: String
+  nameEn_not_contains: String
+  nameEn_starts_with: String
+  nameEn_not_starts_with: String
+  nameEn_ends_with: String
+  nameEn_not_ends_with: String
+  nameChi: String
+  nameChi_not: String
+  nameChi_in: [String!]
+  nameChi_not_in: [String!]
+  nameChi_lt: String
+  nameChi_lte: String
+  nameChi_gt: String
+  nameChi_gte: String
+  nameChi_contains: String
+  nameChi_not_contains: String
+  nameChi_starts_with: String
+  nameChi_not_starts_with: String
+  nameChi_ends_with: String
+  nameChi_not_ends_with: String
+  wholesalePlan: Int
+  wholesalePlan_not: Int
+  wholesalePlan_in: [Int!]
+  wholesalePlan_not_in: [Int!]
+  wholesalePlan_lt: Int
+  wholesalePlan_lte: Int
+  wholesalePlan_gt: Int
+  wholesalePlan_gte: Int
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  mobile: String
+  mobile_not: String
+  mobile_in: [String!]
+  mobile_not_in: [String!]
+  mobile_lt: String
+  mobile_lte: String
+  mobile_gt: String
+  mobile_gte: String
+  mobile_contains: String
+  mobile_not_contains: String
+  mobile_starts_with: String
+  mobile_not_starts_with: String
+  mobile_ends_with: String
+  mobile_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  billingAddress: String
+  billingAddress_not: String
+  billingAddress_in: [String!]
+  billingAddress_not_in: [String!]
+  billingAddress_lt: String
+  billingAddress_lte: String
+  billingAddress_gt: String
+  billingAddress_gte: String
+  billingAddress_contains: String
+  billingAddress_not_contains: String
+  billingAddress_starts_with: String
+  billingAddress_not_starts_with: String
+  billingAddress_ends_with: String
+  billingAddress_not_ends_with: String
+  salesman: String
+  salesman_not: String
+  salesman_in: [String!]
+  salesman_not_in: [String!]
+  salesman_lt: String
+  salesman_lte: String
+  salesman_gt: String
+  salesman_gte: String
+  salesman_contains: String
+  salesman_not_contains: String
+  salesman_starts_with: String
+  salesman_not_starts_with: String
+  salesman_ends_with: String
+  salesman_not_ends_with: String
+  website: String
+  website_not: String
+  website_in: [String!]
+  website_not_in: [String!]
+  website_lt: String
+  website_lte: String
+  website_gt: String
+  website_gte: String
+  website_contains: String
+  website_not_contains: String
+  website_starts_with: String
+  website_not_starts_with: String
+  website_ends_with: String
+  website_not_ends_with: String
+  remark: String
+  remark_not: String
+  remark_in: [String!]
+  remark_not_in: [String!]
+  remark_lt: String
+  remark_lte: String
+  remark_gt: String
+  remark_gte: String
+  remark_contains: String
+  remark_not_contains: String
+  remark_starts_with: String
+  remark_not_starts_with: String
+  remark_ends_with: String
+  remark_not_ends_with: String
+  paymentMethod: String
+  paymentMethod_not: String
+  paymentMethod_in: [String!]
+  paymentMethod_not_in: [String!]
+  paymentMethod_lt: String
+  paymentMethod_lte: String
+  paymentMethod_gt: String
+  paymentMethod_gte: String
+  paymentMethod_contains: String
+  paymentMethod_not_contains: String
+  paymentMethod_starts_with: String
+  paymentMethod_not_starts_with: String
+  paymentMethod_ends_with: String
+  paymentMethod_not_ends_with: String
+  district: String
+  district_not: String
+  district_in: [String!]
+  district_not_in: [String!]
+  district_lt: String
+  district_lte: String
+  district_gt: String
+  district_gte: String
+  district_contains: String
+  district_not_contains: String
+  district_starts_with: String
+  district_not_starts_with: String
+  district_ends_with: String
+  district_not_ends_with: String
+  logs: String
+  logs_not: String
+  logs_in: [String!]
+  logs_not_in: [String!]
+  logs_lt: String
+  logs_lte: String
+  logs_gt: String
+  logs_gte: String
+  logs_contains: String
+  logs_not_contains: String
+  logs_starts_with: String
+  logs_not_starts_with: String
+  logs_ends_with: String
+  logs_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [CustomerScalarWhereInput!]
+  OR: [CustomerScalarWhereInput!]
+  NOT: [CustomerScalarWhereInput!]
+}
+
+type CustomerShop {
+  id: ID!
+  code: String!
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: [Int!]!
+  customer: Customer
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CustomerShopConnection {
+  pageInfo: PageInfo!
+  edges: [CustomerShopEdge]!
+  aggregate: AggregateCustomerShop!
+}
+
+input CustomerShopCreatedeliveryDayInput {
+  set: [Int!]
+}
+
+input CustomerShopCreateInput {
+  id: ID
+  code: String!
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: CustomerShopCreatedeliveryDayInput
+  customer: CustomerCreateOneWithoutShopsInput
+}
+
+input CustomerShopCreateManyWithoutCustomerInput {
+  create: [CustomerShopCreateWithoutCustomerInput!]
+  connect: [CustomerShopWhereUniqueInput!]
+}
+
+input CustomerShopCreateWithoutCustomerInput {
+  id: ID
+  code: String!
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: CustomerShopCreatedeliveryDayInput
+}
+
+type CustomerShopEdge {
+  node: CustomerShop!
+  cursor: String!
+}
+
+enum CustomerShopOrderByInput {
+  id_ASC
+  id_DESC
+  code_ASC
+  code_DESC
+  nameEn_ASC
+  nameEn_DESC
+  nameChi_ASC
+  nameChi_DESC
+  phone_ASC
+  phone_DESC
+  deliverAddress_ASC
+  deliverAddress_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CustomerShopPreviousValues {
+  id: ID!
+  code: String!
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: [Int!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CustomerShopScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  nameEn: String
+  nameEn_not: String
+  nameEn_in: [String!]
+  nameEn_not_in: [String!]
+  nameEn_lt: String
+  nameEn_lte: String
+  nameEn_gt: String
+  nameEn_gte: String
+  nameEn_contains: String
+  nameEn_not_contains: String
+  nameEn_starts_with: String
+  nameEn_not_starts_with: String
+  nameEn_ends_with: String
+  nameEn_not_ends_with: String
+  nameChi: String
+  nameChi_not: String
+  nameChi_in: [String!]
+  nameChi_not_in: [String!]
+  nameChi_lt: String
+  nameChi_lte: String
+  nameChi_gt: String
+  nameChi_gte: String
+  nameChi_contains: String
+  nameChi_not_contains: String
+  nameChi_starts_with: String
+  nameChi_not_starts_with: String
+  nameChi_ends_with: String
+  nameChi_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  deliverAddress: String
+  deliverAddress_not: String
+  deliverAddress_in: [String!]
+  deliverAddress_not_in: [String!]
+  deliverAddress_lt: String
+  deliverAddress_lte: String
+  deliverAddress_gt: String
+  deliverAddress_gte: String
+  deliverAddress_contains: String
+  deliverAddress_not_contains: String
+  deliverAddress_starts_with: String
+  deliverAddress_not_starts_with: String
+  deliverAddress_ends_with: String
+  deliverAddress_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [CustomerShopScalarWhereInput!]
+  OR: [CustomerShopScalarWhereInput!]
+  NOT: [CustomerShopScalarWhereInput!]
+}
+
+type CustomerShopSubscriptionPayload {
+  mutation: MutationType!
+  node: CustomerShop
+  updatedFields: [String!]
+  previousValues: CustomerShopPreviousValues
+}
+
+input CustomerShopSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CustomerShopWhereInput
+  AND: [CustomerShopSubscriptionWhereInput!]
+  OR: [CustomerShopSubscriptionWhereInput!]
+  NOT: [CustomerShopSubscriptionWhereInput!]
+}
+
+input CustomerShopUpdatedeliveryDayInput {
+  set: [Int!]
+}
+
+input CustomerShopUpdateInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: CustomerShopUpdatedeliveryDayInput
+  customer: CustomerUpdateOneWithoutShopsInput
+}
+
+input CustomerShopUpdateManyDataInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: CustomerShopUpdatedeliveryDayInput
+}
+
+input CustomerShopUpdateManyMutationInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: CustomerShopUpdatedeliveryDayInput
+}
+
+input CustomerShopUpdateManyWithoutCustomerInput {
+  create: [CustomerShopCreateWithoutCustomerInput!]
+  delete: [CustomerShopWhereUniqueInput!]
+  connect: [CustomerShopWhereUniqueInput!]
+  set: [CustomerShopWhereUniqueInput!]
+  disconnect: [CustomerShopWhereUniqueInput!]
+  update: [CustomerShopUpdateWithWhereUniqueWithoutCustomerInput!]
+  upsert: [CustomerShopUpsertWithWhereUniqueWithoutCustomerInput!]
+  deleteMany: [CustomerShopScalarWhereInput!]
+  updateMany: [CustomerShopUpdateManyWithWhereNestedInput!]
+}
+
+input CustomerShopUpdateManyWithWhereNestedInput {
+  where: CustomerShopScalarWhereInput!
+  data: CustomerShopUpdateManyDataInput!
+}
+
+input CustomerShopUpdateWithoutCustomerDataInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: CustomerShopUpdatedeliveryDayInput
+}
+
+input CustomerShopUpdateWithWhereUniqueWithoutCustomerInput {
+  where: CustomerShopWhereUniqueInput!
+  data: CustomerShopUpdateWithoutCustomerDataInput!
+}
+
+input CustomerShopUpsertWithWhereUniqueWithoutCustomerInput {
+  where: CustomerShopWhereUniqueInput!
+  update: CustomerShopUpdateWithoutCustomerDataInput!
+  create: CustomerShopCreateWithoutCustomerInput!
+}
+
+input CustomerShopWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  nameEn: String
+  nameEn_not: String
+  nameEn_in: [String!]
+  nameEn_not_in: [String!]
+  nameEn_lt: String
+  nameEn_lte: String
+  nameEn_gt: String
+  nameEn_gte: String
+  nameEn_contains: String
+  nameEn_not_contains: String
+  nameEn_starts_with: String
+  nameEn_not_starts_with: String
+  nameEn_ends_with: String
+  nameEn_not_ends_with: String
+  nameChi: String
+  nameChi_not: String
+  nameChi_in: [String!]
+  nameChi_not_in: [String!]
+  nameChi_lt: String
+  nameChi_lte: String
+  nameChi_gt: String
+  nameChi_gte: String
+  nameChi_contains: String
+  nameChi_not_contains: String
+  nameChi_starts_with: String
+  nameChi_not_starts_with: String
+  nameChi_ends_with: String
+  nameChi_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  deliverAddress: String
+  deliverAddress_not: String
+  deliverAddress_in: [String!]
+  deliverAddress_not_in: [String!]
+  deliverAddress_lt: String
+  deliverAddress_lte: String
+  deliverAddress_gt: String
+  deliverAddress_gte: String
+  deliverAddress_contains: String
+  deliverAddress_not_contains: String
+  deliverAddress_starts_with: String
+  deliverAddress_not_starts_with: String
+  deliverAddress_ends_with: String
+  deliverAddress_not_ends_with: String
+  customer: CustomerWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [CustomerShopWhereInput!]
+  OR: [CustomerShopWhereInput!]
+  NOT: [CustomerShopWhereInput!]
+}
+
+input CustomerShopWhereUniqueInput {
+  id: ID
+  code: String
+}
+
+type CustomerSubscriptionPayload {
+  mutation: MutationType!
+  node: Customer
+  updatedFields: [String!]
+  previousValues: CustomerPreviousValues
+}
+
+input CustomerSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CustomerWhereInput
+  AND: [CustomerSubscriptionWhereInput!]
+  OR: [CustomerSubscriptionWhereInput!]
+  NOT: [CustomerSubscriptionWhereInput!]
+}
+
+input CustomerUpdateInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  shops: CustomerShopUpdateManyWithoutCustomerInput
+  group: CustomerGroupUpdateOneRequiredWithoutCustomersInput
+  coupons: CustomerCouponUpdateManyWithoutCustomerInput
+}
+
+input CustomerUpdateManyDataInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+}
+
+input CustomerUpdateManyMutationInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+}
+
+input CustomerUpdateManyWithoutGroupInput {
+  create: [CustomerCreateWithoutGroupInput!]
+  delete: [CustomerWhereUniqueInput!]
+  connect: [CustomerWhereUniqueInput!]
+  set: [CustomerWhereUniqueInput!]
+  disconnect: [CustomerWhereUniqueInput!]
+  update: [CustomerUpdateWithWhereUniqueWithoutGroupInput!]
+  upsert: [CustomerUpsertWithWhereUniqueWithoutGroupInput!]
+  deleteMany: [CustomerScalarWhereInput!]
+  updateMany: [CustomerUpdateManyWithWhereNestedInput!]
+}
+
+input CustomerUpdateManyWithWhereNestedInput {
+  where: CustomerScalarWhereInput!
+  data: CustomerUpdateManyDataInput!
+}
+
+input CustomerUpdateOneRequiredWithoutCouponsInput {
+  create: CustomerCreateWithoutCouponsInput
+  update: CustomerUpdateWithoutCouponsDataInput
+  upsert: CustomerUpsertWithoutCouponsInput
+  connect: CustomerWhereUniqueInput
+}
+
+input CustomerUpdateOneWithoutShopsInput {
+  create: CustomerCreateWithoutShopsInput
+  update: CustomerUpdateWithoutShopsDataInput
+  upsert: CustomerUpsertWithoutShopsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CustomerWhereUniqueInput
+}
+
+input CustomerUpdateWithoutCouponsDataInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  shops: CustomerShopUpdateManyWithoutCustomerInput
+  group: CustomerGroupUpdateOneRequiredWithoutCustomersInput
+}
+
+input CustomerUpdateWithoutGroupDataInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  shops: CustomerShopUpdateManyWithoutCustomerInput
+  coupons: CustomerCouponUpdateManyWithoutCustomerInput
+}
+
+input CustomerUpdateWithoutShopsDataInput {
+  code: String
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  group: CustomerGroupUpdateOneRequiredWithoutCustomersInput
+  coupons: CustomerCouponUpdateManyWithoutCustomerInput
+}
+
+input CustomerUpdateWithWhereUniqueWithoutGroupInput {
+  where: CustomerWhereUniqueInput!
+  data: CustomerUpdateWithoutGroupDataInput!
+}
+
+input CustomerUpsertWithoutCouponsInput {
+  update: CustomerUpdateWithoutCouponsDataInput!
+  create: CustomerCreateWithoutCouponsInput!
+}
+
+input CustomerUpsertWithoutShopsInput {
+  update: CustomerUpdateWithoutShopsDataInput!
+  create: CustomerCreateWithoutShopsInput!
+}
+
+input CustomerUpsertWithWhereUniqueWithoutGroupInput {
+  where: CustomerWhereUniqueInput!
+  update: CustomerUpdateWithoutGroupDataInput!
+  create: CustomerCreateWithoutGroupInput!
+}
+
+input CustomerWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  nameEn: String
+  nameEn_not: String
+  nameEn_in: [String!]
+  nameEn_not_in: [String!]
+  nameEn_lt: String
+  nameEn_lte: String
+  nameEn_gt: String
+  nameEn_gte: String
+  nameEn_contains: String
+  nameEn_not_contains: String
+  nameEn_starts_with: String
+  nameEn_not_starts_with: String
+  nameEn_ends_with: String
+  nameEn_not_ends_with: String
+  nameChi: String
+  nameChi_not: String
+  nameChi_in: [String!]
+  nameChi_not_in: [String!]
+  nameChi_lt: String
+  nameChi_lte: String
+  nameChi_gt: String
+  nameChi_gte: String
+  nameChi_contains: String
+  nameChi_not_contains: String
+  nameChi_starts_with: String
+  nameChi_not_starts_with: String
+  nameChi_ends_with: String
+  nameChi_not_ends_with: String
+  wholesalePlan: Int
+  wholesalePlan_not: Int
+  wholesalePlan_in: [Int!]
+  wholesalePlan_not_in: [Int!]
+  wholesalePlan_lt: Int
+  wholesalePlan_lte: Int
+  wholesalePlan_gt: Int
+  wholesalePlan_gte: Int
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  mobile: String
+  mobile_not: String
+  mobile_in: [String!]
+  mobile_not_in: [String!]
+  mobile_lt: String
+  mobile_lte: String
+  mobile_gt: String
+  mobile_gte: String
+  mobile_contains: String
+  mobile_not_contains: String
+  mobile_starts_with: String
+  mobile_not_starts_with: String
+  mobile_ends_with: String
+  mobile_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  billingAddress: String
+  billingAddress_not: String
+  billingAddress_in: [String!]
+  billingAddress_not_in: [String!]
+  billingAddress_lt: String
+  billingAddress_lte: String
+  billingAddress_gt: String
+  billingAddress_gte: String
+  billingAddress_contains: String
+  billingAddress_not_contains: String
+  billingAddress_starts_with: String
+  billingAddress_not_starts_with: String
+  billingAddress_ends_with: String
+  billingAddress_not_ends_with: String
+  salesman: String
+  salesman_not: String
+  salesman_in: [String!]
+  salesman_not_in: [String!]
+  salesman_lt: String
+  salesman_lte: String
+  salesman_gt: String
+  salesman_gte: String
+  salesman_contains: String
+  salesman_not_contains: String
+  salesman_starts_with: String
+  salesman_not_starts_with: String
+  salesman_ends_with: String
+  salesman_not_ends_with: String
+  website: String
+  website_not: String
+  website_in: [String!]
+  website_not_in: [String!]
+  website_lt: String
+  website_lte: String
+  website_gt: String
+  website_gte: String
+  website_contains: String
+  website_not_contains: String
+  website_starts_with: String
+  website_not_starts_with: String
+  website_ends_with: String
+  website_not_ends_with: String
+  remark: String
+  remark_not: String
+  remark_in: [String!]
+  remark_not_in: [String!]
+  remark_lt: String
+  remark_lte: String
+  remark_gt: String
+  remark_gte: String
+  remark_contains: String
+  remark_not_contains: String
+  remark_starts_with: String
+  remark_not_starts_with: String
+  remark_ends_with: String
+  remark_not_ends_with: String
+  paymentMethod: String
+  paymentMethod_not: String
+  paymentMethod_in: [String!]
+  paymentMethod_not_in: [String!]
+  paymentMethod_lt: String
+  paymentMethod_lte: String
+  paymentMethod_gt: String
+  paymentMethod_gte: String
+  paymentMethod_contains: String
+  paymentMethod_not_contains: String
+  paymentMethod_starts_with: String
+  paymentMethod_not_starts_with: String
+  paymentMethod_ends_with: String
+  paymentMethod_not_ends_with: String
+  district: String
+  district_not: String
+  district_in: [String!]
+  district_not_in: [String!]
+  district_lt: String
+  district_lte: String
+  district_gt: String
+  district_gte: String
+  district_contains: String
+  district_not_contains: String
+  district_starts_with: String
+  district_not_starts_with: String
+  district_ends_with: String
+  district_not_ends_with: String
+  logs: String
+  logs_not: String
+  logs_in: [String!]
+  logs_not_in: [String!]
+  logs_lt: String
+  logs_lte: String
+  logs_gt: String
+  logs_gte: String
+  logs_contains: String
+  logs_not_contains: String
+  logs_starts_with: String
+  logs_not_starts_with: String
+  logs_ends_with: String
+  logs_not_ends_with: String
+  shops_every: CustomerShopWhereInput
+  shops_some: CustomerShopWhereInput
+  shops_none: CustomerShopWhereInput
+  group: CustomerGroupWhereInput
+  coupons_every: CustomerCouponWhereInput
+  coupons_some: CustomerCouponWhereInput
+  coupons_none: CustomerCouponWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [CustomerWhereInput!]
+  OR: [CustomerWhereInput!]
+  NOT: [CustomerWhereInput!]
+}
+
+input CustomerWhereUniqueInput {
+  id: ID
+  code: String
+}
+
+scalar DateTime
+
+scalar Long
+
+type Mutation {
+  createCustomer(data: CustomerCreateInput!): Customer!
+  updateCustomer(data: CustomerUpdateInput!, where: CustomerWhereUniqueInput!): Customer
+  updateManyCustomers(data: CustomerUpdateManyMutationInput!, where: CustomerWhereInput): BatchPayload!
+  upsertCustomer(where: CustomerWhereUniqueInput!, create: CustomerCreateInput!, update: CustomerUpdateInput!): Customer!
+  deleteCustomer(where: CustomerWhereUniqueInput!): Customer
+  deleteManyCustomers(where: CustomerWhereInput): BatchPayload!
+  createCustomerCoupon(data: CustomerCouponCreateInput!): CustomerCoupon!
+  updateCustomerCoupon(data: CustomerCouponUpdateInput!, where: CustomerCouponWhereUniqueInput!): CustomerCoupon
+  updateManyCustomerCoupons(data: CustomerCouponUpdateManyMutationInput!, where: CustomerCouponWhereInput): BatchPayload!
+  upsertCustomerCoupon(where: CustomerCouponWhereUniqueInput!, create: CustomerCouponCreateInput!, update: CustomerCouponUpdateInput!): CustomerCoupon!
+  deleteCustomerCoupon(where: CustomerCouponWhereUniqueInput!): CustomerCoupon
+  deleteManyCustomerCoupons(where: CustomerCouponWhereInput): BatchPayload!
+  createCustomerGroup(data: CustomerGroupCreateInput!): CustomerGroup!
+  updateCustomerGroup(data: CustomerGroupUpdateInput!, where: CustomerGroupWhereUniqueInput!): CustomerGroup
+  updateManyCustomerGroups(data: CustomerGroupUpdateManyMutationInput!, where: CustomerGroupWhereInput): BatchPayload!
+  upsertCustomerGroup(where: CustomerGroupWhereUniqueInput!, create: CustomerGroupCreateInput!, update: CustomerGroupUpdateInput!): CustomerGroup!
+  deleteCustomerGroup(where: CustomerGroupWhereUniqueInput!): CustomerGroup
+  deleteManyCustomerGroups(where: CustomerGroupWhereInput): BatchPayload!
+  createCustomerShop(data: CustomerShopCreateInput!): CustomerShop!
+  updateCustomerShop(data: CustomerShopUpdateInput!, where: CustomerShopWhereUniqueInput!): CustomerShop
+  updateManyCustomerShops(data: CustomerShopUpdateManyMutationInput!, where: CustomerShopWhereInput): BatchPayload!
+  upsertCustomerShop(where: CustomerShopWhereUniqueInput!, create: CustomerShopCreateInput!, update: CustomerShopUpdateInput!): CustomerShop!
+  deleteCustomerShop(where: CustomerShopWhereUniqueInput!): CustomerShop
+  deleteManyCustomerShops(where: CustomerShopWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  customer(where: CustomerWhereUniqueInput!): Customer
+  customers(where: CustomerWhereInput, orderBy: CustomerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Customer]!
+  customersConnection(where: CustomerWhereInput, orderBy: CustomerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CustomerConnection!
+  customerCoupon(where: CustomerCouponWhereUniqueInput!): CustomerCoupon
+  customerCoupons(where: CustomerCouponWhereInput, orderBy: CustomerCouponOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CustomerCoupon]!
+  customerCouponsConnection(where: CustomerCouponWhereInput, orderBy: CustomerCouponOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CustomerCouponConnection!
+  customerGroup(where: CustomerGroupWhereUniqueInput!): CustomerGroup
+  customerGroups(where: CustomerGroupWhereInput, orderBy: CustomerGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CustomerGroup]!
+  customerGroupsConnection(where: CustomerGroupWhereInput, orderBy: CustomerGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CustomerGroupConnection!
+  customerShop(where: CustomerShopWhereUniqueInput!): CustomerShop
+  customerShops(where: CustomerShopWhereInput, orderBy: CustomerShopOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CustomerShop]!
+  customerShopsConnection(where: CustomerShopWhereInput, orderBy: CustomerShopOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CustomerShopConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  customer(where: CustomerSubscriptionWhereInput): CustomerSubscriptionPayload
+  customerCoupon(where: CustomerCouponSubscriptionWhereInput): CustomerCouponSubscriptionPayload
+  customerGroup(where: CustomerGroupSubscriptionWhereInput): CustomerGroupSubscriptionPayload
+  customerShop(where: CustomerShopSubscriptionWhereInput): CustomerShopSubscriptionPayload
+}

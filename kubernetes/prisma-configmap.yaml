@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: prisma
+  name: prisma-configmap
+  namespace: erp
+data:
+  PRISMA_CONFIG: |
+    port: 4466
+    CLUSTER_PUBLIC_KEY: erp.com
+    databases:
+      default:
+        connector: mongo
+        uri: mongodb://prisma:prisma@mongo

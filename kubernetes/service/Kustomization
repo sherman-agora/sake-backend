@@ -1,0 +1,41 @@
+resources:
+
+- sms-customer-deployment.yaml
+
+- sms-product-deployment.yaml
+
+
+- sms-supplier-deployment.yaml
+
+
+- sms-delivery-deployment.yaml
+
+
+- sms-sales-order-deployment.yaml
+
+
+- sms-po-deployment.yaml
+
+
+- sms-invoice-deployment.yaml
+
+
+- sms-shipping-deployment.yaml
+
+
+- sms-inventory-deployment.yaml
+
+
+- sms-forecast-deployment.yaml
+
+
+- sms-receive-deployment.yaml
+
+
+- sms-user-deployment.yaml
+
+
+- sms-xero-deployment.yaml
+
+
+- web-integration-deployment.yaml

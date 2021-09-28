@@ -1,0 +1,23 @@
+
+type Auth {
+  id: ID! @id
+  apiUrl: String
+}
+
+type Redirect {
+  id: ID! @id
+  redirectUrl: String
+}
+
+type XeroUser {
+  id: ID! @id
+  accessToken: String!
+  refreshToken: String!
+  tenantId: String!
+}
+
+type Contact {
+  id: ID! @id
+  code: String! @unique
+  xeroId: String! @unique
+}

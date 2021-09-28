@@ -1,0 +1,16 @@
+# import Query.supplier, Query.suppliers, Query.suppliersConnection, Mutation.createSupplier, Mutation.updateSupplier, Mutation.deleteSupplier from 'prisma.graphql'
+
+type Supplier @key(fields: "id") {
+  id: ID!
+  name: String!
+  contactPerson: String
+  address: String
+  email: String
+  country: String
+  phone: String
+  fax: String
+  paymentTerms: String
+  creditLine: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}

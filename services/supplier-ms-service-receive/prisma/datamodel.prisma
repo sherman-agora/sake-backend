@@ -1,0 +1,22 @@
+type ReceivePayment {
+  id: ID! @id
+  invoiceId: ID!
+  deliveryNoteId: ID
+  userId: ID
+  paymentMethod: PaymentType!
+  paidAt: DateTime!
+  state: ReceivePaymentState
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum PaymentType {
+  COD
+  CREDIT
+  DEBIT
+}
+
+enum ReceivePaymentState {
+  CREATED
+  DELETED
+}

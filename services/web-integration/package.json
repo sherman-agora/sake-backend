@@ -1,0 +1,57 @@
+{
+  "name": "petgo-web-integration",
+  "version": "0.1.0",
+  "description": "Petgo Supplier System w/ Web Integration",
+  "main": "dist",
+  "scripts": {
+    "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
+    "build": "babel src -s -D -d dist --presets es2015,stage-0",
+    "start": "node -r dotenv/config dist",
+    "start:docker": "node dist",
+    "prestart": "npm run -s build",
+    "test": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-unused-vars": 1
+    }
+  },
+  "author": "Warren Chan",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-link-http": "^1.5.16",
+    "axios": "^0.19.2",
+    "body-parser": "^1.13.3",
+    "compression": "^1.5.2",
+    "cors": "^2.7.1",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.13.3",
+    "graphql": "^14.6.0",
+    "graphql-tag": "^2.10.3",
+    "kafka-node": "^5.0.0",
+    "kafkajs": "^1.14.0",
+    "morgan": "^1.8.0",
+    "resource-router-middleware": "^0.6.0"
+  },
+  "devDependencies": {
+    "apollo-boost": "^0.4.7",
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "cross-fetch": "^3.0.4",
+    "nodemon": "2.0.2"
+  }
+}

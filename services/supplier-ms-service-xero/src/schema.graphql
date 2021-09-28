@@ -1,0 +1,13 @@
+# import Query.auth, Query.auths, Query.authsConnection, Mutation.createAuth, Mutation.updateAuth, Mutation.deleteAuth from 'prisma.graphql'
+# import Query.redirect, Query.redirects, Query.redirectsConnection, Mutation.createRedirect, Mutation.updateRedirect, Mutation.deleteRedirect from 'prisma.graphql'
+# import Query.user, Query.users, Query.usersConnection, Mutation.createUser, Mutation.updateUser, Mutation.deleteUser from 'prisma.graphql'
+# import Query.contact, Query.contacts, Query.contactsConnection, Mutation.createContact, Mutation.updateContact, Mutation.deleteContact from 'prisma.graphql'
+
+
+type Query {
+    checking:String!
+}
+
+type Mutation {
+    disconnect:String
+}

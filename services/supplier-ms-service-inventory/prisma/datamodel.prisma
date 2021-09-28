@@ -1,0 +1,52 @@
+type Warehouse {
+  id: ID! @id
+  name: String! @unique
+  description: String
+  address: String
+  type: WarehouseType!
+  products: [InventoryItem!]! @relation(link: INLINE)
+  summaries: [WarehouseSummary!]!
+}
+
+enum WarehouseType {
+  PENDING,
+  NORMAL,
+  DISPOSE,
+  TEMPORARY,
+  MARKETING,
+  OUT,
+  OUTGOING,
+}
+
+type InventoryItem{
+  id: ID! @id
+  warehouse: Warehouse!
+  productId: ID!
+  purchaseOrderId: String!
+  deliveryNoteId: String
+  label: String
+  expiryDate: DateTime!
+  cost: Float
+}
+
+type ProductSummary {
+  id: ID! @id
+  productId: ID! @unique
+  incomingQuantity: Int!
+  outgoingQuantity: Int!
+  quantity: Int!
+}
+
+type WarehouseSummary {
+  id: ID! @id
+  warehouse: Warehouse! @relation(link: INLINE)
+  productId: ID!
+  quantity: Int!
+}
+
+type ExpiryDateSummary {
+  id: ID! @id
+  productId: ID!
+  expiryDate: DateTime!
+  quantity: Int!
+}

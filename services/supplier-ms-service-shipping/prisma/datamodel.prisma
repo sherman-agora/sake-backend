@@ -1,0 +1,36 @@
+type Shipping {
+  id: ID! @id
+  code: String! @unique
+  purchaseOrderId: ID!
+  userId: ID
+  deliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  products: [ShippingItem!]! @relation(link: INLINE)
+  state: ShippingState
+}
+
+type ShippingItem{
+  id: ID! @id
+  shipping: Shipping!
+  productId: ID!
+  warehouseId: ID
+  expiryDate: DateTime
+  labelFrom: String
+  labelTo: String
+  expectedQuantity: Int
+  quantity: Int
+  price: Float
+  totalPrice : Float
+  deliveryDate: DateTime
+  remarks: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum ShippingState {
+  CONFIRMED
+  DELETE
+}

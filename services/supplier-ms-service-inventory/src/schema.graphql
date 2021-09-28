@@ -1,0 +1,105 @@
+# import Query.warehouse, Query.warehouses, Query.warehousesConnection, Mutation.createWarehouse, Mutation.updateWarehouse, Mutation.deleteWarehouse from 'prisma.graphql'
+# import Query.inventoryItem, Query.inventoryItems, Query.inventoryItemsConnection, Mutation.createInventoryItem, Mutation.updateInventoryItem, Mutation.deleteInventoryItem, Mutation.deleteManyInventoryItem from 'prisma.graphql'
+# import Query.productSummary, Query.productSummaries, Query.productSummariesConnection, Mutation.createProductSummary, Mutation.updateProductSummary, Mutation.deleteProductSummary from 'prisma.graphql'
+# import Query.expiryDateSummary, Query.expiryDateSummaries, Query.expiryDateSummariesConnection, Mutation.createExpiryDateSummary, Mutation.updateExpiryDateSummary, Mutation.deleteExpiryDateSummary from 'prisma.graphql'
+# import Query.warehouseSummary, Query.warehouseSummaries, Query.warehouseSummariesConnection, Mutation.createWarehouseSummary, Mutation.updateWarehouseSummary, Mutation.deleteWarehouseSummary from 'prisma.graphql'
+
+type Warehouse @key(fields: "id") {
+  id: ID!
+  name: String!
+  description: String
+  address: String
+  type: WarehouseType!
+  products(
+    where: InventoryItemWhereInput
+    orderBy: InventoryItemOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [InventoryItem!]
+  summaries(
+    where: WarehouseSummaryWhereInput
+    orderBy: WarehouseSummaryOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [WarehouseSummary!]
+}
+
+type InventoryItem @key(fields: "id") {
+  id: ID!
+  warehouse: Warehouse!
+  product: Product!
+  purchaseOrder: PurchaseOrder!
+  deliveryNote: DeliveryNote
+  label: String
+  expiryDate: DateTime!
+  cost: Float
+}
+
+type ProductSummary @key(fields: "id") {
+  id: ID!
+  product: Product!
+  quantity: Int!
+  items: [InventoryItem]
+}
+
+type WarehouseSummary @key(fields: "id") {
+  id: ID!
+  warehouse: Warehouse!
+  product: Product!
+  quantity: Int!
+  items: [InventoryItem]
+}
+
+type ExpiryDateSummary @key(fields: "id") {
+  id: ID!
+  product: Product!
+  expiryDate: DateTime!
+  quantity: Int!
+  items: [InventoryItem]
+}
+
+extend type Product @key(fields: "id") {
+  id: ID! @external
+  quantity: Int!
+  incomingQuantity: Int!
+  outgoingQuantity: Int!
+  warehouseSummaries: [WarehouseSummary]
+  expiryDateSummaries: [ExpiryDateSummary]
+  inventoryItems: [InventoryItem]
+}
+
+extend type PurchaseOrder @key(fields: "id") {
+  id: ID! @external
+  inventoryItems: [InventoryItem]
+}
+
+extend type DeliveryNote @key(fields: "id") {
+  id: ID! @external
+  inventoryItems: [InventoryItem]
+}
+
+input InventoryItemId {
+  id: ID!
+  code: String!
+}
+
+input outWarehouseInput {
+  whName: String!
+  inventoryItems: [InventoryItemId]!
+}
+input TransferWarehouse {
+  toWarehouseId: ID!
+  inventoryItemIds: [ID]!
+  fromWarehouseIds: [ID]!
+}
+type Mutation {
+  inWarehouse(data: [InventoryItemCreateInput!]!): [InventoryItem]!
+  outWarehouse(data: outWarehouseInput!): Warehouse!
+  transferWarehouse(data: TransferWarehouse!): [WarehouseSummary]!
+}

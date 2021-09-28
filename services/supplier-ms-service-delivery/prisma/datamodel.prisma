@@ -1,0 +1,31 @@
+type DeliveryNote {
+  id: ID! @id
+  code: String! @unique
+  salesOrderId: ID!
+  invoiceId: ID!
+  userId: ID
+  customerId: ID
+  state: DeliveryStatus!
+  deliveryDate: DateTime
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  items: [DeliveryItem!]! @relation(link: INLINE)
+}
+
+enum DeliveryStatus{
+  SENT,
+  PICKED,
+  PACKED,
+  DELIVERED,
+  DELETED
+}
+
+type DeliveryItem  {
+  id: ID! @id
+  deliveryNote: DeliveryNote!
+  productId: ID!
+  itemId: ID!
+  boxNum: Int!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}

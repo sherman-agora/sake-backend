@@ -1,0 +1,33 @@
+type Invoice {
+  id: ID! @id
+  code: String! @unique
+  salesOrderId: ID!
+  userId: ID
+  state: InvoiceStatus!
+  paymentStatus: InvoicePaymentStatus!
+  totalPrice: Float!
+  title: String
+  remark: String
+  shipmentDate: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  paidAt: DateTime
+}
+
+enum InvoiceStatus{
+  DRAFT,
+  APPROVED,
+  CONFIRMED,
+  DELIVERED,
+  PAID,
+  DELETED,
+}
+
+enum InvoicePaymentStatus {
+  UNPAID
+  PENDING
+  PARTIAL_PAID
+  PAID
+  OUTSTANDING
+  OVERDUE
+}

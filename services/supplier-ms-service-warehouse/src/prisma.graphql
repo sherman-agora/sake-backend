@@ -1,0 +1,202 @@
+type AggregateWarehouse {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar Long
+
+type Mutation {
+  createWarehouse(data: WarehouseCreateInput!): Warehouse!
+  updateWarehouse(data: WarehouseUpdateInput!, where: WarehouseWhereUniqueInput!): Warehouse
+  updateManyWarehouses(data: WarehouseUpdateManyMutationInput!, where: WarehouseWhereInput): BatchPayload!
+  upsertWarehouse(where: WarehouseWhereUniqueInput!, create: WarehouseCreateInput!, update: WarehouseUpdateInput!): Warehouse!
+  deleteWarehouse(where: WarehouseWhereUniqueInput!): Warehouse
+  deleteManyWarehouses(where: WarehouseWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  warehouse(where: WarehouseWhereUniqueInput!): Warehouse
+  warehouses(where: WarehouseWhereInput, orderBy: WarehouseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Warehouse]!
+  warehousesConnection(where: WarehouseWhereInput, orderBy: WarehouseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WarehouseConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  warehouse(where: WarehouseSubscriptionWhereInput): WarehouseSubscriptionPayload
+}
+
+type Warehouse {
+  id: ID!
+  code: String!
+  description: String
+  address: String
+  status: WarehouseStatus!
+}
+
+type WarehouseConnection {
+  pageInfo: PageInfo!
+  edges: [WarehouseEdge]!
+  aggregate: AggregateWarehouse!
+}
+
+input WarehouseCreateInput {
+  id: ID
+  code: String!
+  description: String
+  address: String
+  status: WarehouseStatus
+}
+
+type WarehouseEdge {
+  node: Warehouse!
+  cursor: String!
+}
+
+enum WarehouseOrderByInput {
+  id_ASC
+  id_DESC
+  code_ASC
+  code_DESC
+  description_ASC
+  description_DESC
+  address_ASC
+  address_DESC
+  status_ASC
+  status_DESC
+}
+
+type WarehousePreviousValues {
+  id: ID!
+  code: String!
+  description: String
+  address: String
+  status: WarehouseStatus!
+}
+
+enum WarehouseStatus {
+  ACTIVE
+  INACTIVE
+}
+
+type WarehouseSubscriptionPayload {
+  mutation: MutationType!
+  node: Warehouse
+  updatedFields: [String!]
+  previousValues: WarehousePreviousValues
+}
+
+input WarehouseSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: WarehouseWhereInput
+  AND: [WarehouseSubscriptionWhereInput!]
+  OR: [WarehouseSubscriptionWhereInput!]
+  NOT: [WarehouseSubscriptionWhereInput!]
+}
+
+input WarehouseUpdateInput {
+  code: String
+  description: String
+  address: String
+  status: WarehouseStatus
+}
+
+input WarehouseUpdateManyMutationInput {
+  code: String
+  description: String
+  address: String
+  status: WarehouseStatus
+}
+
+input WarehouseWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  status: WarehouseStatus
+  status_not: WarehouseStatus
+  status_in: [WarehouseStatus!]
+  status_not_in: [WarehouseStatus!]
+  AND: [WarehouseWhereInput!]
+  OR: [WarehouseWhereInput!]
+  NOT: [WarehouseWhereInput!]
+}
+
+input WarehouseWhereUniqueInput {
+  id: ID
+  code: String
+}

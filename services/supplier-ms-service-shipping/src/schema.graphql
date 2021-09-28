@@ -1,0 +1,53 @@
+# import Query.shipping, Query.shippings, Query.shippingsConnection, Mutation.createShipping, Mutation.updateShipping, Mutation.deleteShipping from 'prisma.graphql'
+# import Query.shippingItem, Query.shippingItems, Query.shippingItemsConnection, Mutation.createShippingItem, Mutation.updateShippingItem, Mutation.deleteShippingItem from 'prisma.graphql'
+
+type Shipping @key(fields: "id") {
+  id: ID!
+  code: String!
+  purchaseOrder: PurchaseOrder!
+  userId: ID
+  state: ShippingState
+  deliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  products(where: ShippingItemWhereInput, orderBy: ShippingItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ShippingItem!]
+}
+
+type ShippingItem @key(fields: "id") {
+  id: ID!
+  shipping: Shipping!
+  product: Product!
+  warehouse: Warehouse
+  expiryDate: DateTime
+  labelFrom: String
+  labelTo: String
+  quantity: Int
+  price: Float
+  totalPrice: Float
+  deliveryDate: DateTime
+  remarks: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum ShippingState {
+  CONFIRMED,
+  DELETE,
+}
+
+extend type Warehouse @key(fields: "id") {
+  id: ID! @external
+  shippingItems: [ShippingItem]
+}
+
+extend type PurchaseOrder @key(fields: "id") {
+  id: ID! @external
+  shippings: [Shipping]
+}
+
+extend type Product @key(fields: "id") {
+  id: ID! @external
+  shippingItems: [ShippingItem]
+}

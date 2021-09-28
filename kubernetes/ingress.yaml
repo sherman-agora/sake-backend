@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.class: 'nginx'
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+  namespace: erp
+spec:
+  tls:
+    - hosts:
+        - petgo-erp-api.tsunadon.com
+        - petgo-web-api.tsunadon.com
+      secretName: petgo-tls
+  rules:
+    - host: petgo-erp-api.tsunadon.com
+      http:
+        paths:
+          - backend:
+              serviceName: sms-gateway
+              servicePort: 4000
+    - host: petgo-web-api.tsunadon.com
+      http:
+        paths:
+          - backend:
+              serviceName: web-integration
+              servicePort: 3000

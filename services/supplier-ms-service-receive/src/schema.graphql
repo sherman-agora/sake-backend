@@ -1,0 +1,22 @@
+# import Query.receivePayment, Query.receivePayments, Query.receivePaymentsConnection, Mutation.createReceivePayment, Mutation.updateReceivePayment, Mutation.deleteReceivePayment from 'prisma.graphql'
+
+type ReceivePayment @key(fields: "id") {
+  id: ID!
+  invoice: Invoice!
+  userId: ID
+  paymentMethod: PaymentType!
+  state: ReceivePaymentState
+  paidAt: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+extend type Invoice @key(fields: "id") {
+  id: ID! @external
+  receivePayment: ReceivePayment
+}
+
+extend type DeliveryNote @key(fields: "id") {
+  id: ID! @external
+  receivePayments: ReceivePayment
+}

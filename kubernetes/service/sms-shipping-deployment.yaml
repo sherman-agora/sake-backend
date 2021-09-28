@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sms-shipping
+  name: sms-shipping
+  namespace: erp
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sms-shipping
+    spec:
+      containers:
+        - env:
+            - name: KAFKA_BROKER0
+              value: kafka-0.kafka-headless.petgo.svc.cluster.local:9092
+            - name: KAFKA_BROKER1
+              value: kafka-1.kafka-headless.petgo.svc.cluster.local:9092
+            - name: KAFKA_BROKER2
+              value: kafka-2.kafka-headless.petgo.svc.cluster.local:9092
+            - name: KAFKA_HOST
+              value: kafka.petgo.svc.cluster.local:9092
+            - name: PORT
+              value: '3010'
+            - name: PRISMA_STAGE
+              value: dev
+            - name: PRISMA_HOST
+              value: prisma
+            - name: PRISMA_PORT
+              value: '4466'
+            - name: WAIT_HOSTS
+              value: prisma:4466, kafka.petgo.svc.cluster.local:9092, sms-po:3004
+          image: gcr.io/petgo-management-system/sms-shipping:1.8.72
+          name: sms-shipping
+          ports:
+            - containerPort: 3010
+          resources: {}
+      restartPolicy: Always
+status: {}

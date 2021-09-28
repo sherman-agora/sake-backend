@@ -1,0 +1,59 @@
+# import Query.salesOrderItem, Query.salesOrderItems, Query.salesOrderItemsConnection, Mutation.createSalesOrderItem, Mutation.updateSalesOrderItem, Mutation.deleteSalesOrderItem from 'prisma.graphql'
+# import Query.salesOrder, Query.salesOrders, Query.salesOrdersConnection, Mutation.createSalesOrder, Mutation.updateSalesOrder, Mutation.deleteSalesOrder from 'prisma.graphql'
+
+type SalesOrder @key(fields: "id") {
+  id: ID!
+  code: String!
+  title: String
+  remark: String
+  discountAmount: Float
+  couponDiscount: Float
+  discount: Float
+  subtotal: Float
+  grandTotal: Float!
+  state: SalesOrderStatus!
+  userId: ID
+  shop: CustomerShop!
+  products(
+    where: SalesOrderItemWhereInput
+    orderBy: SalesOrderItemOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [SalesOrderItem!]
+  shippingDate: String
+  actualDate: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SalesOrderItem @key(fields: "id") {
+  id: ID!
+  discount: String
+  salesOrder: SalesOrder!
+  discountAmount: Float
+  wholeSalePrice: Float
+  product: Product!
+  remarks: String
+  quantity: Int!
+  salesPlan: Int
+  price: Float!
+  totalPrice: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+extend type CustomerShop @key(fields: "id") {
+  id: ID! @external
+  salesOrders: [SalesOrder]
+}
+
+extend type Product @key(fields: "id") {
+  id: ID! @external
+  salesOrderItems: [SalesOrderItem]
+}
+type Mutation {
+  updateSalesOrderByXero(data: SalesOrderUpdateInput!, where: SalesOrderWhereUniqueInput!): SalesOrder
+}

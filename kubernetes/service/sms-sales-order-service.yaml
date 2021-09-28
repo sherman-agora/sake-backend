@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sms-sales-order
+  name: sms-sales-order
+  namespace: erp
+spec:
+  ports:
+    - name: '3007'
+      port: 3007
+      targetPort: 3007
+  selector:
+    io.kompose.service: sms-sales-order
+status:
+  loadBalancer: {}

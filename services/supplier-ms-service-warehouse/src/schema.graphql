@@ -1,0 +1,2 @@
+# import Query.warehouses, Query.warehouse, Query.warehousesConnection from 'prisma.graphql'
+# import Mutation.createWarehouse, Mutation.updateWarehouse, Mutation.deleteWarehouse from 'prisma.graphql'

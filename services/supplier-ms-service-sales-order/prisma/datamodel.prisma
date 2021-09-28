@@ -1,0 +1,47 @@
+type SalesOrder {
+  id: ID! @id
+  code: String! @unique
+  title: String
+  remark: String
+  discountAmount: Float @default(value: 0)
+  couponDiscount: Float @default(value: 0)
+  discount: Float @default(value: 0)
+  subtotal: Float
+  grandTotal: Float!
+  state: SalesOrderStatus!
+  userId: ID
+  shopId: ID!
+  products: [SalesOrderItem!]! @relation(link: INLINE)
+  shippingDate: String
+  actualDate: DateTime
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type SalesOrderItem{
+  id: ID! @id
+  salesOrder: SalesOrder!
+  productId: ID!
+  discount: String
+  discountAmount: Float
+  wholeSalePrice: Float
+  remarks: String
+  quantity: Int!
+  salesPlan: Int
+  subPrice: Float
+  price: Float!
+  totalPrice : Float!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum SalesOrderStatus{
+  RECEIVED,
+  CONFIRMED,
+  INVOICED,
+  PACKED,
+  SHIPPED,
+  DELIVERED,
+  PAID,
+  DELETED,
+}

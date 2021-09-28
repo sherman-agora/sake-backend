@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.21.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sms-xero
+  name: sms-xero
+  namespace: erp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sms-xero
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.21.0 ()
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sms-xero
+    spec:
+      containers:
+        - env:
+            - name: KAFKA_BROKER0
+              value: kafka-0.kafka-headless.petgo.svc.cluster.local:9092
+            - name: KAFKA_BROKER1
+              value: kafka-1.kafka-headless.petgo.svc.cluster.local:9092
+            - name: KAFKA_BROKER2
+              value: kafka-2.kafka-headless.petgo.svc.cluster.local:9092
+            - name: ACCOUNT_ID
+              value: cf78c295-e07d-4002-be4f-5885a68f9d4a
+            - name: KAFKA_HOST
+              value: kafka.petgo.svc.cluster.local:9092
+            - name: PORT
+              value: '3012'
+            - name: PRISMA_STAGE
+              value: dev
+            - name: PRISMA_HOST
+              value: prisma
+            - name: PRISMA_PORT
+              value: '4466'
+            - name: REDIRECTURI
+              value: http://petgo.techballogy.com/Callback
+            - name: WAIT_HOSTS
+              value: sms-customer:3006, sms-po:3004, sms-sales-order:3007
+            - name: WAIT_HOSTS_TIMEOUT
+              value: '60'
+          image: gcr.io/petgo-management-system/sms-xero:1.8.72
+          # imagePullPolicy: ""
+          name: sms-xero
+          ports:
+            - containerPort: 3012
+          resources: {}
+      restartPolicy: Always
+      serviceAccountName: ''
+      volumes: null
+status: {}

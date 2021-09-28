@@ -1,0 +1,41 @@
+type PurchaseOrder {
+  id: ID! @id
+  code: String! @unique
+  supplierId: ID!
+  userId: ID
+  expectedDeliveryAt: DateTime
+  unfinishedTax: Float
+  totalPrice: Float
+  state: PurchaseOrderStatus!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  products: [PurchaseOrderItem!]! @relation(link: INLINE)
+}
+
+enum PurchaseOrderStatus{
+  DRAFT,
+  PENDING,
+  APPROVED,
+  SENT,
+  ACKED,
+  CONFIRMED,
+  SHIPPED,
+  ARRIVED,
+  RECEIVED,
+  DELETED,
+}
+
+type PurchaseOrderItem {
+ id: ID! @id
+ purchaseOrder: PurchaseOrder!
+ productId: ID!
+ remarks: String
+ quantity: Int
+ price: Float
+ totalPrice : Float
+ deliveryDate: DateTime
+ expiryDate: DateTime
+ tax: Float
+ createdAt: DateTime! @createdAt
+ updatedAt: DateTime! @updatedAt
+}

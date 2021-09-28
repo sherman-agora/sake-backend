@@ -1,0 +1,58 @@
+# import Query.deliveryNote, Query.deliveryNotes, Query.deliveryNotesConnection, Mutation.createDeliveryNote, Mutation.updateDeliveryNote, Mutation.deleteDeliveryNote from 'prisma.graphql'
+# import Query.deliveryItem, Query.deliveryItems, Query.deliveryItemsConnection, Mutation.createDeliveryItem, Mutation.updateDeliveryItem, Mutation.deleteDeliveryItem from 'prisma.graphql'
+
+type DeliveryNote @key(fields: "id") {
+  id: ID!
+  code: String!
+  salesOrder: SalesOrder!
+  invoice: Invoice!
+  userId: ID
+  customer: Customer
+  deliveryDate: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  items(
+    where: DeliveryItemWhereInput
+    orderBy: DeliveryItemOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [DeliveryItem!]
+}
+
+type DeliveryItem @key(fields: "id") {
+  id: ID!
+  deliveryNote: DeliveryNote!
+  product: Product!
+  item: InventoryItem!
+  boxNum: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+extend type SalesOrder @key(fields: "id") {
+  id: ID! @external
+  deliveryNote: DeliveryNote
+}
+
+extend type Invoice @key(fields: "id") {
+  id: ID! @external
+  deliveryNote: DeliveryNote
+}
+
+extend type Customer @key(fields: "id") {
+  id: ID! @external
+  deliveryNotes: [DeliveryNote]
+}
+
+extend type Product @key(fields: "id") {
+  id: ID! @external
+  deliveryItems: [DeliveryItem]
+}
+
+extend type InventoryItem @key(fields: "id") {
+  id: ID! @external
+  deliveryItems: [DeliveryItem]
+}

@@ -1,0 +1,40 @@
+# import Query.customer, Query.customers, Query.customersConnection, Mutation.createCustomer, Mutation.updateCustomer, Mutation.deleteCustomer from 'prisma.graphql'
+# import Query.customerGroup, Query.customerGroups, Query.customerGroupsConnection, Mutation.createCustomerGroup, Mutation.updateCustomerGroup, Mutation.deleteCustomerGroup from 'prisma.graphql'
+# import Query.customerShop, Query.customerShops, Query.customerShopsConnection, Mutation.createCustomerShop, Mutation.updateCustomerShop, Mutation.deleteCustomerShop from 'prisma.graphql'
+# import Query.customerCoupon, Query.customerCoupons, Query.customerCouponsConnection, Mutation.createCustomerCoupon, Mutation.updateCustomerCoupon, Mutation.deleteCustomerCoupon from 'prisma.graphql'
+
+type Customer @key(fields: "id") {
+  id: ID!
+  code: String!
+  nameEn: String
+  nameChi: String
+  wholesalePlan: Int
+  phone: String
+  mobile: String
+  email: String
+  billingAddress: String
+  salesman: String
+  website: String
+  remark: String
+  paymentMethod: String
+  district: String
+  logs: String
+  group: CustomerGroup!
+  shops: [CustomerShop!]
+  coupons: [CustomerCoupon!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CustomerShop @key(fields: "id") {
+  id: ID!
+  code: String!
+  nameEn: String
+  nameChi: String
+  phone: String
+  deliverAddress: String
+  deliveryDay: [Int]
+  customer: Customer
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
