@@ -1,45 +1,52 @@
+This project is based on Petco-backend
+
 # Prerequisites
 
 1. `yarn`
-2. `helm`
-3. `kubectl`
+2. `kubectl`
+3. `docker`
 
-# Enable workspace in Yarn
-
-yarn config set workspaces-experimental true
-
-# Install
+# Tech list
+1. Microservices
+1. NodeJs
+1. Graphql - [ApolloGraphql](https://www.apollographql.com/)
+1. Prisma - [ORM](https://www.prisma.io/)
+1. MongoDB
+1. MongoBI
+1. Kafka 
+1. CubeJs
+1. letsencrypt (SSL)
+1. Kubernetes
+1. Docker
+# Install packages in each service
 
 `yarn`
+<br />
+e.g: `cd services/supplier-ms-service-customer` + `yarn`
 
 # Getting Start
 
-## Docker for all service
+## Docker for all service in local develop
 
-- `docker-compose build`
-- `docker-compose up -d`
+- `docker-compose -f docker-compose.base.yml up -d`
+- `docker-compose -f docker-compose.local.yml up -d`
+## Docker for all service for deployment
 
-## Docker for base service only
+- `docker-compose -f docker-compose.production.yml build`
+- `docker-compose -f docker-compose.production.yml push`
+> push the docker image to cloud
+
+## start service only
 
 - `docker-compose -f docker-compose.base.yml up -d`
 - `./services/create-topics.sh`
-- `yarn`
 - go to every services: `cd services/supplier-ms-service-xxxx`
-  1. customer
-  2. product
-  3. supplier
-  4. purchaseOrder
-  5. salesOrder
-  6. shipping
-  7. invoice
-  8. delivery
-  9. inventory
-  10. forecast
-  11. xero
-  12. gateway
-  13. web-integration
 - `yarn prisma:deploy`
 - `yarn start`
+
+# Reporting server
+1. start mongobi `services/mongobi` 
+1. start cubejs `services/cubejs`
 
 # Deployment
 
@@ -57,22 +64,20 @@ yarn config set workspaces-experimental true
    - `kubectl apply -f kubernetes/prisma-configmap.yaml`
    - `kubectl apply -f kubernetes/prisma-deployment.yaml`
    - `kubectl apply -f kubernetes/prisma-service.yaml`
-1. create and push images
-   - `npm run build:prod`
-   - `npm run push:prod`
-1. deploy each services `kubectl apply -f kubernetes/<service-name>-deployment.yaml -f kubernetes/<service-name>-service.yaml`
-   - customer
-   - product
-   - supplier
-   - delivery
-   - sales-order
-   - po
-   - web-integration
-   - invoice
-   - shipping
-   - inventory
-   - forecast
+1. create and push service images
+
+1. edit kubernetes deployment configuration file
+`kubernetes/services/<service-name>-deployment.yaml`
+
+1. deploy each services `kubectl apply -f kubernetes/services/<service-name>-deployment.yaml -f kubernetes/services/<service-name>-service.yaml`
 
 # Reference
 
 TLS - [How to Set Up an Nginx Ingress with Cert-Manager on DigitalOcean Kubernetes](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes#step-1-%E2%80%94-setting-up-dummy-backend-services)
+
+CubeJs - [The Analytics API
+for Building Data Apps](https://cube.dev/)
+
+MongoBi - [MongoDB Connector for BI
+](https://docs.looker.com/setup-and-management/database-config/mongobi)
+
